@@ -1,0 +1,281 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 720px;
+  background: #f3f5f8;
+  color: #172033;
+  font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: 64px 52px minmax(0, 1fr) 34px;
+  width: 100vw;
+  height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(243, 245, 248, 0.92)),
+    #f3f5f8;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 28px;
+  border-bottom: 1px solid #e3e8ef;
+  background: rgba(255, 255, 255, 0.94);
+  color: #172033;
+  user-select: none;
+}
+
+.app-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #1e7bd8;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px 28px 8px;
+  border-bottom: 1px solid #e1e6ee;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.tab {
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #596579;
+  font: inherit;
+  font-weight: 600;
+  line-height: 34px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background: #edf3fb;
+  color: #1f5f9e;
+}
+
+.tab.is-active {
+  border-color: #bfd5f0;
+  background: #e8f1fb;
+  color: #174f87;
+}
+
+.panel {
+  display: none;
+  grid-template-columns: minmax(260px, 1fr) 168px minmax(260px, 1fr);
+  gap: 14px;
+  min-height: 0;
+  padding: 16px 28px;
+}
+
+.panel.is-active {
+  display: grid;
+}
+
+.editor {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 32px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(42, 58, 82, 0.08);
+}
+
+.editor::before {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 1;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(232, 241, 251, 0.94);
+  color: #54708e;
+  font-size: 12px;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.editor:has([data-role="input"])::before {
+  content: "输入";
+}
+
+.editor:has([data-role="output"])::before {
+  content: "输出";
+}
+
+.text-box {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 18px 16px 12px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: #fff;
+  color: #152033;
+  font: 14px Consolas, "SFMono-Regular", "Courier New", monospace;
+  line-height: 1.55;
+  white-space: pre;
+  overflow: auto;
+}
+
+.text-box:focus {
+  box-shadow: inset 0 0 0 2px #4b8fd8;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  padding: 0 14px;
+  border-top: 1px solid #edf1f5;
+  background: #fbfcfe;
+  color: #65748a;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 2px 0;
+  background: transparent;
+}
+
+.actions button {
+  min-height: 34px;
+  margin: 0 0 8px;
+  padding: 7px 10px;
+  border: 1px solid #d3dde8;
+  border-radius: 8px;
+  background: #fff;
+  color: #27354a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(40, 56, 78, 0.06);
+}
+
+.actions button:hover {
+  border-color: #8db8e6;
+  background: #f3f8fe;
+  color: #174f87;
+}
+
+.actions button:active {
+  background: #e7f1fb;
+  transform: translateY(1px);
+}
+
+.split-input {
+  height: 34px;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid #d3dde8;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: #172033;
+  font: inherit;
+  box-shadow: 0 4px 12px rgba(40, 56, 78, 0.06);
+}
+
+.split-input:focus {
+  border-color: #4b8fd8;
+  box-shadow: 0 0 0 3px rgba(75, 143, 216, 0.16);
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 28px;
+  border-top: 1px solid #e1e6ee;
+  background: rgba(255, 255, 255, 0.82);
+  color: #5f6f84;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 900px) {
+  body {
+    min-width: 0;
+  }
+
+  .app-shell {
+    grid-template-rows: 58px auto minmax(0, 1fr) 34px;
+  }
+
+  .app-header {
+    padding: 0 16px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    padding: 10px 16px;
+  }
+
+  .panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(220px, 1fr) auto minmax(220px, 1fr);
+    gap: 12px;
+    overflow: auto;
+    padding: 14px 16px;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+    gap: 8px;
+    overflow: visible;
+  }
+
+  .actions button,
+  .split-input {
+    margin: 0;
+  }
+}

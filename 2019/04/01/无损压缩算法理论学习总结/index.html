@@ -1,446 +1,96 @@
-
- <!DOCTYPE HTML>
+<!DOCTYPE html>
+<!-- generated-blog-route -->
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="UTF-8">
-  
-    <title>无损压缩算法理论学习总结 | Zhangbohun&#39; Blog</title>
-    <meta name="baidu-site-verification" content="code-JwYO18rek3">
-    <meta name="google-site-verification" content="85f2xHdhJww_02wcYFQ6ndfw9b2TomPmpNdRLRUnTHI">
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="zhangbohun">
-    
-    <meta name="description" content="基本说明信息熵： 每条消息中包含的信息的平均量。消息的熵乘以消息的长度决定了消息可以携带多少信息。任何无损压缩技术不可能让一比特的消息携带超过一比特的信息。以下说明中以“压缩”代替“无损压缩”以本人的理解，可以将压缩算法分为两个层面：  
-
-熵编码：根据消息中每个符号出现的概率，然后通过某种映射用更">
-    
-    
-    
-    
-    <link rel="alternative" href="/atom.xml" title="Zhangbohun&#39; Blog" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="carptopus">
+  <meta name="description" content="基本说明信息熵： 每条消息中包含的信息的平均量。消息的熵乘以消息的长度决定了消息可以携带多少信息。任何无损压缩技术不可能让一比特的消息携带超过一比特的信息。以下说明中以“压缩”代替“无损压缩”以本人的理解，可以将压缩算法分为两个层面： 熵编码：根据消息中每个符号出现的概率，">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#2ca6cb">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="无损压缩算法理论学习总结 | Carptopus&apos; Blog">
+  <meta property="og:description" content="基本说明信息熵： 每条消息中包含的信息的平均量。消息的熵乘以消息的长度决定了消息可以携带多少信息。任何无损压缩技术不可能让一比特的消息携带超过一比特的信息。以下说明中以“压缩”代替“无损压缩”以本人的理解，可以将压缩算法分为两个层面： 熵编码：根据消息中每个符号出现的概率，">
+  <meta property="og:url" content="https://carptopus.github.io/2019/04/01/%E6%97%A0%E6%8D%9F%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">
+  <title>无损压缩算法理论学习总结 | Carptopus&apos; Blog</title>
+  <link rel="canonical" href="https://carptopus.github.io/2019/04/01/%E6%97%A0%E6%8D%9F%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">
+  <link rel="alternate" href="/atom.xml" title="Carptopus&apos; Blog" type="application/atom+xml">
+  <link rel="icon">
+  <link rel="stylesheet" href="/Blog/css/style.css">
+  <link rel="stylesheet" href="/Blog/css/runtime.css">
+  <script defer src="/Blog/vendor/marked/marked.umd.js"></script>
+  <script defer src="/Blog/vendor/dompurify/purify.min.js"></script>
+  <script defer src="/Blog/js/analytics.js"></script>
+  <script defer src="/Blog/js/comments.js"></script>
+  <script defer src="/Blog/js/app.js"></script>
 </head>
-</html>
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Zhangbohun&#39; Blog" title="Zhangbohun&#39; Blog"></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Zhangbohun&#39; Blog">Zhangbohun&#39; Blog</a></h1>
-				<h2 class="blog-motto">不问得失，自顾取舍。</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">首页</a></li>
-					
-						<li><a href="/archives">归档</a></li>
-					
-						<li><a href="/about">关于</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="hidden" name="q" value="site:blog.zhangbohun.com">
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
-					</form>
-					
-					</li>
-				</ul>
-			</ul></nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/04/01/无损压缩算法理论学习总结/" title="无损压缩算法理论学习总结" itemprop="url">无损压缩算法理论学习总结</a>
-  </h1>
-  <p class="article-author">By
-      <a href="http://blog.zhangbohun.com/about" title="zhangbohun" target="_blank">zhangbohun</a>
-  </p><p class="article-time">
-    <time datetime="2019-04-01T05:44:56.000Z" itemprop="datePublished">发表于2019年04月01日</time>
-    
-  </p>
-</header>
-	<div class="article-content">
-		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本说明"><span class="toc-number">1.</span> <span class="toc-text">基本说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#熵编码"><span class="toc-number">1.1.</span> <span class="toc-text">熵编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典编码"><span class="toc-number">1.2.</span> <span class="toc-text">字典编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关衍生算法"><span class="toc-number">1.2.1.</span> <span class="toc-text">相关衍生算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#综合通用无损压缩算法"><span class="toc-number">2.</span> <span class="toc-text">综合通用无损压缩算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#相关常见名词说明"><span class="toc-number">2.1.</span> <span class="toc-text">相关常见名词说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他类型通用算法"><span class="toc-number">2.2.</span> <span class="toc-text">其他类型通用算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特定领域压缩算法"><span class="toc-number">3.</span> <span class="toc-text">特定领域压缩算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结与启发"><span class="toc-number">4.</span> <span class="toc-text">总结与启发</span></a></li></ol>
-		
-		</div>
-		
-		<h1 id="基本说明"><a href="#基本说明" class="headerlink" title="基本说明"></a>基本说明</h1><p><a href="https://www.wikiwand.com/zh-hans/%E7%86%B5_(%E4%BF%A1%E6%81%AF%E8%AE%BA" target="_blank" rel="noopener">信息熵</a>： 每条消息中包含的信息的平均量。消息的熵乘以消息的长度决定了消息可以携带多少信息。任何无损压缩技术不可能让一比特的消息携带超过一比特的信息。<br>以下说明中以“压缩”代替“无损压缩”<br>以本人的理解，可以将压缩算法分为两个层面：  </p>
-<ol>
-<li>熵编码：根据消息中每个符号出现的概率，然后通过某种映射用更短的符号替代原来的符号，核心在于提高符号的信息熵</li>
-<li>字典编码：提取信息中的重复部分作为字典，然后通过字典和某种映射替代这些重复的部分，核心在于替代重复</li>
-</ol>
-<h2 id="熵编码"><a href="#熵编码" class="headerlink" title="熵编码"></a><a href="https://www.wikiwand.com/zh-hans/%E7%86%B5%E7%B7%A8%E7%A2%BC%E6%B3%95" target="_blank" rel="noopener">熵编码</a></h2><p><a href="https://www.wikiwand.com/zh-hans/%E9%9C%8D%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">霍夫曼编码</a>： 根据消息中符号出现的频率构建出霍夫曼树，实现频率高的符号编码短，然后根据霍夫曼树得到新的符号替代原来的符号</p>
-<p><a href="https://www.wikiwand.com/zh-hans/%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">算术编码</a>： 根据消息中符号出现的概率算出整个消息（符号串）的概率，一个满足（0.0 ≤ n &lt; 1.0）的小数 n ，这个小数n就代表了这个消息</p>
-<p><a href="https://www.wikiwand.com/zh-hans/%E5%8C%BA%E9%97%B4%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">区间编码</a>： 根据消息中符号出现的概率把符号串映射到大区间数值中的一段小区间（多个符号多次细分区），用小区间边缘的数值的唯一前缀就可以代表了这个区间对应的消息（效果其实和算术编码相同）</p>
-<h2 id="字典编码"><a href="#字典编码" class="headerlink" title="字典编码"></a><a href="https://www.wikiwand.com/en/Dictionary_coder" target="_blank" rel="noopener">字典编码</a></h2><p><a href="https://www.wikiwand.com/zh-hans/%E6%B8%B8%E7%A8%8B%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">RLE</a>（Run-length Encoding）游程编码: 个人把他看作一种比较直觉朴素的字典编码，具体算法就是把字符串中重复出现的多个字符替换为重复次数外加这个字符</p>
-<p><a href="https://www.wikiwand.com/zh-hans/Move-to-front_transform" target="_blank" rel="noopener">MTF</a>(Move-to-front transform): 通过护“recently used symbols”最近访问过的字符栈表，作为一个动态字典，在编码消息时，用字符在栈表中的索引序号替代，同时调整栈表中该字符到栈顶，根据“空间局部性”原理可以实现数据压缩</p>
-<p><a href="https://www.wikiwand.com/zh/LZ77%E4%B8%8ELZ78" target="_blank" rel="noopener">LZ77与LZ78</a>： 典型的字典编码，较早出现并流行的两种通用压缩算法。LZ77：通过滑动窗口”slidingwindow”实现动态字典，用前面出现过的字符串作为字典通过映射（与前一个字符串的距离和字符串长度）替代后面重复出现的字符串；LZ78：提前解析输入数据，生成一个静态字典</p>
-<h3 id="相关衍生算法"><a href="#相关衍生算法" class="headerlink" title="相关衍生算法"></a>相关衍生算法</h3><p><a href="https://www.wikiwand.com/zh-hans/LZSS" target="_blank" rel="noopener">LZSS</a>： 衍生于LZ77，能检测到一个替换是否真的减小了文件大小，以及一些别的优化<br><a href="https://www.wikiwand.com/zh/LZW" target="_blank" rel="noopener">LZW</a>：  衍生于LZ78，优化了字典编码存储，但由于专利限制了发展，在GIF中被使用  </p>
-<h1 id="综合通用无损压缩算法"><a href="#综合通用无损压缩算法" class="headerlink" title="综合通用无损压缩算法"></a>综合通用无损压缩算法</h1><p><a href="https://www.wikiwand.com/zh/DEFLATE" target="_blank" rel="noopener">DEFLATE</a>： 先用LZ77（或 LZSS）算法预处理，然后用霍夫曼编码对压缩后的 literal、length、distance 编码优化，如今最流行的通用压缩算法之一</p>
-<p><a href="https://www.wikiwand.com/en/Bzip2" target="_blank" rel="noopener">bzip2</a>： 涉及多种算法，主要流程包括先使用 Run-length Encoding 游程编码对原始数据进行处理，然后通过 <a href="https://www.wikiwand.com/zh-hans/Burrows-Wheeler%E5%8F%98%E6%8D%A2" target="_blank" rel="noopener">Burrows-Wheeler Transform</a> 转换（可逆的处理一段输入数据使得相同字符连续出现的次数最大化），再用 Move-to-front transform 转换，然后再次使用Run-length Encoding游程编码处理，接下来还会进行霍夫曼编码以及一系列相关处理，较为复杂，速率劣于DEFLATE但压缩率更高</p>
-<p><a href="https://www.wikiwand.com/zh/LZMA" target="_blank" rel="noopener">LZMA</a>：实现了LZ77修改版以位（bit）而非字节（byte）为单元级别的操作，并通过<a href="https://www.wikiwand.com/zh/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE" target="_blank" rel="noopener">马可夫链</a>实现字典索引，速率和压缩率优于bzip2，另有多线程优化的版本LZMA2</p>
-<p><a href="https://www.wikiwand.com/zh/Brotli" target="_blank" rel="noopener">Brotli</a>： 基于LZ77算法的一个现代变体，使用了霍夫曼编码和二阶上下文建模，使用了预定义的120千字节字典包含超过13000个常用单词、短语和其他子字符串，预定义的算法可以提升较小文件的压缩密度。总体速率接近于DEFLATE且压缩率接近于LZMA</p>
-<h2 id="相关常见名词说明"><a href="#相关常见名词说明" class="headerlink" title="相关常见名词说明"></a>相关常见名词说明</h2><p>RAR： 商业软件WinRAR提供的压缩文件格式，压缩算法实现带专利（可能衍生自LZSS）<br>Zip： 一种规范开放的压缩文件容器，被多种压缩软件实现，兼容多种压缩算法主要为DEFLATE<br>GZip： gnu/Linux下的文件压缩软件，提供gz压缩格式，压缩算法基于DEFLATE<br>7-Zip： 开源跨平台压缩软件，提供7z压缩格式，压缩算法主要为Bzip2以及LZMA  </p>
-<h2 id="其他类型通用算法"><a href="#其他类型通用算法" class="headerlink" title="其他类型通用算法"></a>其他类型通用算法</h2><p>另有<a href="https://www.wikiwand.com/zh-hans/%E5%8B%95%E6%85%8B%E9%A6%AC%E5%8F%AF%E5%A4%AB%E5%A3%93%E7%B8%AE" target="_blank" rel="noopener">DMC（动态马可夫压缩）</a>，<a href="https://arxiv.org/abs/1811.08162" target="_blank" rel="noopener">DeepZip</a>,以及<a href="https://www.wikiwand.com/en/Prediction_by_partial_matching" target="_blank" rel="noopener">PPM</a>和他的改进版<a href="https://www.wikiwand.com/en/PAQ" target="_blank" rel="noopener">PAQ</a>（实现Context mixing 智能地结合多个 (PPM 是单个模型) 统计模型）等算法，基本原理是通过部分数据以及各种算法来预测后续输入的符号，通过这种算法来减少输出数据的熵实现压缩。</p>
-<h1 id="特定领域压缩算法"><a href="#特定领域压缩算法" class="headerlink" title="特定领域压缩算法"></a>特定领域压缩算法</h1><p>快速压缩算法：<a href="http://www.quicklz.com/" target="_blank" rel="noopener">QuickLZ</a>，<a href="https://github.com/ning/compress" target="_blank" rel="noopener">LZF</a>，<a href="https://www.wikiwand.com/zh-hans/LZ4" target="_blank" rel="noopener">LZ4</a>，<a href="https://www.wikiwand.com/zh-hans/Snappy" target="_blank" rel="noopener">Snappy</a>，都衍生自L77算法，具有还不错的压缩率以及极快的压缩解压速率，广泛用于RPC调用时传输数据压缩，LZ4还被用于内存压缩技术</p>
-<p>无状态Zip压缩算法：<a href="http://www.libslz.org/" target="_blank" rel="noopener">Stateless ZIP library - SLZ</a>，提供了基于 zlib 实现的流数据压缩器</p>
-<p>数值压缩算法：<a href="http://www.360doc.com/content/17/1017/10/33093582_695630243.shtml" target="_blank" rel="noopener">Varint 与 ZigZag</a>，Varint 可以压缩较小的正数，ZigZag  可以处理负数及大整数使之也可以使用 Varint 编码压缩，protobuf和thrift二进制序列化算法中都使用了二者结合的方式来压缩数字类型</p>
-<p>JSON字符串压缩算法：<a href="https://blog.csdn.net/zhenyu5211314/article/details/52367185" target="_blank" rel="noopener">CJSON 和 HPack</a>，通过数据格式转换减少字符数实现数据压缩</p>
-<p>其他还有各种针对如数据库数据，时序数据，图片，音频，视频等各种数据的无损压缩算法</p>
-<h1 id="总结与启发"><a href="#总结与启发" class="headerlink" title="总结与启发"></a>总结与启发</h1><p>一直以来对无损压缩算法的研究，一方面在提升熵的算法研究到算数编码基本已经到了极限，而另一方面去除信息本身重复部分的算法似乎还有研究空间，甚至有了DeepZip这种通过深度学习算法来寻找数据中隐藏的的重复模式的思路，真不知<a href="http://www.piedpiper.com/" target="_blank" rel="noopener">魔笛手PiedPiper</a>何时就要出现<br>而换个思路来看，从通用无损压缩算法和特定领域内的压缩算法来区分看的话，特定领域内的压缩算法往往根据特殊的数据内容或场景而实现优于直接使用通用压缩算法的效果（特定领域内数据明确的重复模式，类似Brotli中特定领域内的预定义字典等等），想到是否可以设计出压缩算法的公共框架，而把压缩算法分为具体的几个步骤然后在每个步骤根据实际需求做出更优的实现</p>
-<p>参考：<br>[1] 维基百科，相关链接已在正文中给出<br>[2] <a href="https://web.archive.org/web/20170330045922/http://blog.jobbole.com/77247/" target="_blank" rel="noopener">无损数据压缩算法的历史</a><br>[3] <a href="https://web.archive.org/web/20180317013812/http://blog.jobbole.com/76676/" target="_blank" rel="noopener">ZIP 压缩算法详细分析及解压实例解释</a>  </p>
-  
-	</div>
-		<footer class="article-footer clearfix">
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header>
+    <div>
+      <div id="imglogo">
+        <a href="/" data-blog-link><img alt=""></a>
+      </div>
+      <div id="textlogo">
+        <h1 class="site-name"><a href="/" data-blog-link>Blog</a></h1>
+        <h2 class="blog-motto"></h2>
+      </div>
+      <div class="navbar">
+        <button class="navbutton navmobile" id="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false"></button>
+      </div>
+      <nav class="animated" id="site-nav" aria-label="主导航">
+        <ul>
+          <li>
+            <form class="search" id="site-search" role="search" method="get" accept-charset="utf-8">
+              <label for="search">搜索文章</label>
+              <input type="search" id="search" name="q" autocomplete="off" maxlength="40" placeholder="Search">
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/1-编程/">1.编程</a>
-</div>
+  <div id="container">
+    <main id="main" tabindex="-1" aria-live="polite">
+      <section class="runtime-message">
+        <h1>正在载入文章</h1>
+        <p>浏览器正在读取 Markdown 索引。</p>
+      </section>
+    </main>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/整理总结/">整理总结</a><a href="/tags/算法/">算法</a><a href="/tags/无损压缩/">无损压缩</a>
-  </div>
-
-
-
-
-<div class="article-share" id="share">
-
-  <div data-url="http://blog.zhangbohun.com/2019/04/01/无损压缩算法理论学习总结/" data-title="无损压缩算法理论学习总结 | Zhangbohun&#39; Blog" data-tsina class="share clearfix">
-  </div>
-
-</div>
-</footer>   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev">
- <a href="/2020/02/19/WebDataMonitor自定义网络数据监控框架/" title="WebDataMonitor自定义网络数据监控框架">
-  <strong>上一篇：</strong><br>
-  <span>
-  WebDataMonitor自定义网络数据监控框架</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2019/01/11/《精要主义》之精要/" title="《精要主义》之精要">
- <strong>下一篇：</strong><br> 
- <span>《精要主义》之精要
-</span>
-</a>
-</div>
-
-</nav>
-
-	<link rel="stylesheet" href="/css/gitalk.css">
-<script src="/js/gitalk.min.js"></script>
-<div id="gitalk-container"></div>
-<script type="text/javascript">
-    var gitalk = new Gitalk({
-        clientID: 'e66cb4cdd042aaee1e94',
-        clientSecret: 'c7552dda89c9f68514d4d7a4ea34e45b4136adeb',
-        id: decodeURI(window.location.pathname.split('/')[window.location.pathname.split('/').length-2]),
-        repo: 'zhangbohun.github.io',
-        owner: 'zhangbohun',
-        admin: 'zhangbohun'
-    })
-    gitalk.render('gitalk-container')
-</script>
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本说明"><span class="toc-number">1.</span> <span class="toc-text">基本说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#熵编码"><span class="toc-number">1.1.</span> <span class="toc-text">熵编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典编码"><span class="toc-number">1.2.</span> <span class="toc-text">字典编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关衍生算法"><span class="toc-number">1.2.1.</span> <span class="toc-text">相关衍生算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#综合通用无损压缩算法"><span class="toc-number">2.</span> <span class="toc-text">综合通用无损压缩算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#相关常见名词说明"><span class="toc-number">2.1.</span> <span class="toc-text">相关常见名词说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他类型通用算法"><span class="toc-number">2.2.</span> <span class="toc-text">其他类型通用算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特定领域压缩算法"><span class="toc-number">3.</span> <span class="toc-text">特定领域压缩算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结与启发"><span class="toc-number">4.</span> <span class="toc-text">总结与启发</span></a></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
-</div>
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">目录</p>
-		<ul>
-		
-			<li><a href="/categories/1-编程/" title="1.编程">1.编程<sup>5</sup></a></li>
-		
-			<li><a href="/categories/2-软件/" title="2.软件">2.软件<sup>10</sup></a></li>
-		
-			<li><a href="/categories/3-写作/" title="3.写作">3.写作<sup>3</sup></a></li>
-		
-			<li><a href="/categories/4-思考整理/" title="4.思考整理">4.思考整理<sup>7</sup></a></li>
-		
-			<li><a href="/categories/5-收获感悟/" title="5.收获感悟">5.收获感悟<sup>5</sup></a></li>
-		
-			<li><a href="/categories/6-方法技巧/" title="6.方法技巧">6.方法技巧<sup>5</sup></a></li>
-		
-			<li><a href="/categories/7-杂七杂八/" title="7.杂七杂八">7.杂七杂八<sup>2</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-  <div class="tagcloudlist">
-    <p class="asidetitle">标签云</p>
-    <div class="tagcloudlist clearfix">
-       <a href="/tags/书籍/" style="font-size: 12px;">书籍</a> <a href="/tags/介绍/" style="font-size: 16px;">介绍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/使用技巧/" style="font-size: 16px;">使用技巧</a> <a href="/tags/工具/" style="font-size: 20px;">工具</a> <a href="/tags/幻想/" style="font-size: 14px;">幻想</a> <a href="/tags/我的软件/" style="font-size: 20px;">我的软件</a> <a href="/tags/整理总结/" style="font-size: 20px;">整理总结</a> <a href="/tags/无损压缩/" style="font-size: 10px;">无损压缩</a> <a href="/tags/旧文/" style="font-size: 16px;">旧文</a> <a href="/tags/时间管理/" style="font-size: 12px;">时间管理</a> <a href="/tags/有趣/" style="font-size: 18px;">有趣</a> <a href="/tags/神神叨叨/" style="font-size: 14px;">神神叨叨</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/观后感/" style="font-size: 12px;">观后感</a> <a href="/tags/观点/" style="font-size: 18px;">观点</a> <a href="/tags/读后感/" style="font-size: 16px;">读后感</a> <a href="/tags/象征/" style="font-size: 12px;">象征</a> <a href="/tags/阅读/" style="font-size: 18px;">阅读</a>
+    <div class="openaside" id="open-aside">
+      <button class="navbutton" type="button" aria-label="显示侧边栏"></button>
+    </div>
+    <div id="asidepart">
+      <aside class="clearfix" id="site-aside" aria-label="博客导航"></aside>
     </div>
   </div>
 
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-      <li><a href="http://wuchong.me/" target="_blank" title="YangJian">Jark's Blog</a></li>
-    </ul>
-</div>
-
-</aside>
-</div>
+  <footer>
+    <div id="footer">
+      <div class="line">
+        <span></span>
+        <a id="author-image-link" href="/about/" data-blog-link><div class="author" aria-label="关于作者"></div></a>
+      </div>
+      <section class="info">
+        <p id="author-introduction"></p>
+      </section>
+      <div class="social-font"></div>
+      <p class="copyright"></p>
     </div>
-    <footer><div id="footer">
-	
-	<div class="line">
-		<span></span>
-		
-		<a href="http://weibo.com/zhangbohun" target="_blank"><div class="author"></div></a>
-		
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello,I&#39;m Zhangbohun,welcome to my world. <br>
-			I&#39;ll share my learning experience with you at this blog.</p>
-	</section>
-	 
-	<div class="social-font">
-		
-		<a href="http://weibo.com/zhangbohun" target="_blank" class="icon-weibo" title="weibo"></a>
-		
-		
-		<a href="https://github.com/zhangbohun" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		
-		
-		<a href="https://www.douban.com/people/zhangbohun" target="_blank" class="icon-douban" title="豆瓣"></a>
-		
-		
-		
-		<a href="mailto:mail@zhangbohun.com" target="_blank" class="icon-email" title="Email Me"></a>
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2026 
-		
-		<a href="http://blog.zhangbohun.com/about" target="_blank" title="zhangbohun">zhangbohun</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
+  </footer>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
-
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
-</script>
-
-
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-74429306-1', 'zhangbohun.github.io');  
-ga('send', 'pageview');
-</script>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?86a3b05b68f0eb551f482adbb942fba3";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-<div id="totop">
-<a title="返回顶部"><img src="/img/scrollup.png"></a>
-</div>
-
-<script src="/js/totop.js"></script>
-
-<script type="text/x-mathjax-config"> 
-MathJax.Hub.Config({ 
-  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} 
-}); 
-</script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-  </body>
+  <dialog id="image-lightbox" aria-label="图片预览">
+    <button class="lightbox-close" type="button" aria-label="关闭图片预览">×</button>
+    <figure>
+      <img alt="">
+      <figcaption></figcaption>
+    </figure>
+  </dialog>
+  <button id="totop" type="button" aria-label="返回顶部" title="返回顶部">
+    <img alt="">
+  </button>
+  <noscript><p class="noscript-message">这个博客需要启用 JavaScript 才能读取 Markdown 文章。</p></noscript>
+</body>
 </html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷 TodoList</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">
+                <i class="fas fa-tasks"></i>
+                TodoList
+            </h1>
+            <div class="stats">
+                <span class="stat-item">
+                    <i class="fas fa-list-check"></i>
+                    <span id="total-count">0</span>
+                </span>
+                <span class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="completed-count">0</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-wrapper">
+                <input type="text" id="todo-input" placeholder="添加新的任务..." maxlength="100">
+                <button id="add-btn" class="add-btn">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-list"></i> 全部
+                </button>
+                <button class="filter-btn" data-filter="active">
+                    <i class="fas fa-clock"></i> 进行中
+                </button>
+                <button class="filter-btn" data-filter="completed">
+                    <i class="fas fa-check"></i> 已完成
+                </button>
+            </div>
+        </div>
+
+        <div class="todo-list" id="todo-list">
+            <!-- Todo items will be dynamically added here -->
+        </div>
+
+        <div class="empty-state" id="empty-state">
+            <i class="fas fa-clipboard-list"></i>
+            <p>还没有任务，开始添加吧！</p>
+        </div>
+
+        <div class="actions">
+            <button id="clear-completed" class="action-btn">
+                <i class="fas fa-trash"></i>
+                清除已完成
+            </button>
+            <button id="clear-all" class="action-btn danger">
+                <i class="fas fa-times-circle"></i>
+                清除全部
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

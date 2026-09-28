@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TextTools</title>
+  <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+  <main class="app-shell" aria-label="TextTools">
+    <header class="app-header">
+      <span class="app-mark">7K</span>
+      <span class="app-title">TextTools</span>
+    </header>
+
+    <nav class="tabs" aria-label="工具分类">
+      <button class="tab is-active" type="button" data-tab-target="text-panel">1.文本处理</button>
+      <button class="tab" type="button" data-tab-target="code-panel">2.编码解码</button>
+      <button class="tab" type="button" data-tab-target="format-panel">3.格式化</button>
+    </nav>
+
+    <section class="panel is-active" id="text-panel" data-panel="text" aria-label="文本处理">
+      <div class="editor">
+        <textarea class="text-box" data-role="input" spellcheck="false"></textarea>
+        <div class="counter" data-role="input-counter">行数:1 字数:0</div>
+      </div>
+
+      <div class="actions">
+        <button type="button" data-action="sortCharAsc">按首字符顺序排列行</button>
+        <button type="button" data-action="sortCharDesc">按首字符倒序排列行</button>
+        <button type="button" data-action="sortNumAsc">按数值顺序排列行</button>
+        <button type="button" data-action="sortNumDesc">按数值倒序排列行</button>
+        <button type="button" data-action="titleCase">英文标题化</button>
+        <button type="button" data-action="lowerCase">英文转换为小写</button>
+        <button type="button" data-action="upperCase">英文转换为大写</button>
+        <button type="button" data-action="trimLines">去除行首尾空白</button>
+        <button type="button" data-action="removeEmptyLines">去除空行</button>
+        <button type="button" data-action="removeDuplicateLines">去除重复行</button>
+        <button type="button" data-action="combineLines">合并为一行</button>
+        <button type="button" data-action="splitLines">按字符拆分行</button>
+        <input class="split-input" type="text" data-role="split-token" value="。" aria-label="拆分字符">
+      </div>
+
+      <div class="editor">
+        <textarea class="text-box" data-role="output" spellcheck="false"></textarea>
+        <div class="counter" data-role="output-counter">行数:1 字数:0</div>
+      </div>
+    </section>
+
+    <section class="panel" id="code-panel" data-panel="code" aria-label="编码解码">
+      <div class="editor">
+        <textarea class="text-box" data-role="input" spellcheck="false"></textarea>
+        <div class="counter" data-role="input-counter">行数:1 字数:0</div>
+      </div>
+
+      <div class="actions">
+        <button type="button" data-action="urlDecodeUtf8">URL解码|UTF8</button>
+        <button type="button" data-action="urlDecodeGbk">URL解码|GBK</button>
+        <button type="button" data-action="urlEncodeUtf8">URL编码|UTF8</button>
+        <button type="button" data-action="traditionalToSimplified">繁体转简体</button>
+        <button type="button" data-action="chineseNumberToArabic">转换为数字</button>
+        <button type="button" data-action="base64Decode">BASE64解码</button>
+        <button type="button" data-action="base64Encode">BASE64编码</button>
+        <button type="button" data-action="unicodeDecode">Unicode解码</button>
+        <button type="button" data-action="morseDecode">摩尔斯电码解码</button>
+        <button type="button" data-action="morseEncode">摩尔斯电码编码</button>
+      </div>
+
+      <div class="editor">
+        <textarea class="text-box" data-role="output" spellcheck="false"></textarea>
+        <div class="counter" data-role="output-counter">行数:1 字数:0</div>
+      </div>
+    </section>
+
+    <section class="panel" id="format-panel" data-panel="format" aria-label="格式化">
+      <div class="editor">
+        <textarea class="text-box" data-role="input" spellcheck="false"></textarea>
+        <div class="counter" data-role="input-counter">行数:1 字数:0</div>
+      </div>
+
+      <div class="actions">
+        <button type="button" data-action="formatXml">XML格式化</button>
+        <button type="button" data-action="formatJson">JSON格式化</button>
+      </div>
+
+      <div class="editor">
+        <textarea class="text-box" data-role="output" spellcheck="false"></textarea>
+        <div class="counter" data-role="output-counter">行数:1 字数:0</div>
+      </div>
+    </section>
+
+    <div class="status-bar" data-role="status">就绪</div>
+  </main>
+
+  <script src="app.js?v=2"></script>
+</body>
+</html>

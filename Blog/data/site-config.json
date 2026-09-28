@@ -1,0 +1,96 @@
+{
+  "site": {
+    "title": "Carptopus' Blog",
+    "subtitle": "不问得失，自顾取舍。",
+    "description": "个人博客",
+    "author": "carptopus",
+    "email": "carptopus@163.com",
+    "language": "zh-CN",
+    "url": "https://carptopus.github.io",
+    "customDomain": "blog.zhangbohun.com",
+    "legacyHosts": [
+      "blog.zhangbohun.com",
+      "carptopus.github.io",
+      "zhangbohun.github.io"
+    ],
+    "postsPerPage": 7
+  },
+  "menu": [
+    {
+      "label": "首页",
+      "href": "/"
+    },
+    {
+      "label": "归档",
+      "href": "/archives"
+    },
+    {
+      "label": "关于",
+      "href": "/about"
+    }
+  ],
+  "widgets": [
+    "rss",
+    "category",
+    "tagcloud",
+    "links"
+  ],
+  "appearance": {
+    "logoEnabled": true,
+    "logo": "img/logo.png",
+    "favicon": "img/favicon.ico",
+    "authorImageEnabled": true,
+    "authorImage": "img/author.jpg",
+    "scrollTopImage": "img/scrollup.png",
+    "customFont": true
+  },
+  "features": {
+    "tocArticle": true,
+    "tocAside": true,
+    "lightbox": true,
+    "toTop": true
+  },
+  "search": {
+    "enabled": true,
+    "provider": "google",
+    "action": "https://www.google.com/search",
+    "restrictToCurrentHost": true,
+    "localFirst": true,
+    "fallbackOnNoResults": true,
+    "localFields": [
+      "title",
+      "excerpt",
+      "description",
+      "categories",
+      "tags",
+      "keywords"
+    ]
+  },
+  "verification": {
+    "baidu": "code-JwYO18rek3",
+    "google": "85f2xHdhJww_02wcYFQ6ndfw9b2TomPmpNdRLRUnTHI"
+  },
+  "author": {
+    "introLine1": "Hello,I'm Carptopus,welcome to my world.",
+    "introLine2": "I'll share my learning experience with you at this blog.",
+    "email": "carptopus@163.com",
+    "github": "zhangbohun",
+    "weibo": "zhangbohun",
+    "douban": "zhangbohun",
+    "twitter": "",
+    "facebook": "",
+    "stackoverflow": ""
+  },
+  "links": [
+    {
+      "name": "Jark's Blog",
+      "url": "http://wuchong.me/",
+      "title": "YangJian"
+    }
+  ],
+  "footer": {
+    "poweredBy": "Powered by Markdown and JavaScript",
+    "themeName": "Jacman",
+    "themeUrl": "https://github.com/wuchong/jacman"
+  }
+}

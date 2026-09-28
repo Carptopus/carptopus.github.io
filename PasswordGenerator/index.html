@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8"/>
+    <title>随机密码生成器</title>
+    <meta name="description" content="单击按钮即可生成可靠、随机且唯一的密码。">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="stylesheets/styles_common_cached.css">
+    <style>
+        /*** PASSWORD GENERATOR PAGE ***/
+        .password-generator-page .form-filler .alternative-box {
+            padding-top: 0;
+        }
+
+        .password-generator-page .form-filler .alternative-box .container {
+            padding-bottom: 50px;
+        }
+
+        .password-generator-page .alternative .section-header {
+            margin: 0 0 20px 0;
+        }
+
+        .password-generator-page .password-generator-box {
+            padding: 40px 0 0 0;
+        }
+
+        .password-generator-box {
+            background: #f6f7f7;
+            padding: 40px 0 40px 0;
+        }
+
+        .password-generator,
+        .password-generator * {
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .password-generator {
+            width: 500px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px 45px;
+            margin: 30px auto 0 auto;
+            position: relative;
+            border: 1px solid #eaeaea;
+        }
+
+        .text-password {
+            width: 440px;
+            height: 52.5px;
+            padding: 8px 25px 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #68ac5b;
+            display: block;
+            float: left;
+            color: #454545;
+            box-sizing: border-box;
+            margin: 0 0 50px calc(50% - 220px);
+            font-size: 22.5px;
+            font-weight: bolder;
+        }
+
+        .rating-password {
+            clear: both;
+            padding-left: 30px;
+            background-repeat: no-repeat;
+            background-position: calc(50% - 35px) center;
+            text-transform: uppercase;
+            line-height: 35px;
+            display: none;
+            text-align: center;
+            margin-left: -47.5px;
+            position: absolute;
+            left: 50%;
+            top: 80px;
+            width: 95px;
+            background-size: 24px;
+        }
+
+        .rating-password.show-now {
+            display: block;
+        }
+
+        .rating-password.weak {
+            background-image: url("img/weak.png");
+        }
+
+        .rating-password.medium {
+            background-image: url("img/medium.png");
+        }
+
+        .rating-password.good {
+            background-image: url("img/good.png");
+        }
+
+        .rating-password.strong-score {
+            background-image: url("img/strong.png");
+        }
+
+        .advanced-settings {
+            clear: both;
+        }
+
+        #check-copy,
+        #check-exclude,
+        #check-hexadecimal,
+        #check-uppercase,
+        #check-lowercase,
+        #check-numeric-register,
+        #check-character {
+            display: none;
+        }
+
+        .label-copy {
+            line-height: 20px;
+            font-size: 15px;
+            margin: 10px 0;
+            float: left;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .label-copy span {
+            width: 20px;
+            height: 20px;
+            padding-left: 35px;
+            background-repeat: no-repeat;
+            background-position: 0 -19px;
+            background-size: 20px;
+            background-image: url("img/check-password.png");
+        }
+
+        #check-copy:checked ~ .label-copy span {
+            background-position: 0 0;
+        }
+
+        .number-password {
+            font-size: 15px;
+            margin: 5px 0;
+        }
+
+        .number-password-text {
+            width: 45px;
+            height: 30px;
+            padding: 8px 8px 8px 15px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border: 1px solid #68ac5b;
+            float: left;
+            box-sizing: border-box;
+        }
+
+        .counter-password {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            background-color: #68ac5b;
+            width: 23px;
+            height: 30px;
+            display: inline-block;
+            float: left;
+        }
+
+        .caption-password {
+            float: left;
+            margin-left: 10px;
+        }
+
+        .counter-plus,
+        .counter-minus {
+            height: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .counter-plus::after {
+            content: "";
+            border: 8px solid transparent;
+            border-bottom: 8px solid #fff;
+            position: absolute;
+            top: -3px;
+            left: 3px;
+        }
+
+        .counter-minus::after {
+            content: "";
+            border: 8px solid transparent;
+            border-top: 8px solid #fff;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+        }
+
+        .label-all {
+            width: 100%;
+            float: left;
+            line-height: 20px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .label-all span {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border: 1px solid #68ac5b;
+            background-color: #fff;
+            display: inline-block;
+            margin: 5px 5px 5px 0;
+            vertical-align: middle;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .option-password .label-all {
+            width: 65px;
+        }
+
+        .option-password .label-character {
+            width: auto;
+        }
+
+        .symbols {
+            width: 150px;
+            height: 30px;
+            float: left;
+            display: block;
+            margin: 0;
+            padding: 3px 15px;
+            border-radius: 5px;
+            border: 1px solid #68ac5b;
+            box-sizing: border-box;
+        }
+
+        #check-exclude:checked + .label-all span,
+        #check-hexadecimal:checked + .label-all span,
+        #check-uppercase:checked + .label-all span,
+        #check-lowercase:checked + .label-all span,
+        #check-numeric-register:checked + .label-all span,
+        #check-character:checked + .label-all span {
+            background-image: url("img/check-all.png");
+        }
+
+        #check-exclude:disabled + .label-all span,
+        #check-hexadecimal:disabled + .label-all span,
+        #check-uppercase:disabled + .label-all span,
+        #check-lowercase:disabled + .label-all span,
+        #check-numeric-register:disabled + .label-all span,
+        #check-character:disabled + .label-all span {
+            background-image: none;
+            background-color: rgb(235, 235, 228);
+        }
+
+        .option-password {
+            clear: both;
+            height: 30px;
+        }
+
+        .password-generator-box .section-header {
+            margin: 20px auto;
+            width: 700px;
+        }
+
+        .password-generator-box .section-header h1 {
+            font-family: 'robotobold';
+        }
+
+        .password-generator-box .section-header h2, .password-generator-box .section-header h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            line-height: 3.125rem;
+            color: #5bb254;
+            font-family: montserratregular;
+            font-size: 43px;
+        }
+
+        .password-generator-box .dark-text {
+            color: #2e374b;
+        }
+
+        .password-generator-box .sub-heading {
+            margin-top: 20px;
+        }
+
+        .password-generator-box .sub-heading h4 {
+            font-size: 32px;
+            font-family: montserratlight;
+            font-weight: normal;
+        }
+
+        .password-generator-box strong,
+        .password-generator-box .strong {
+            font-weight: 400;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .button-password-box {
+            float: left;
+            width: 100%;
+        }
+
+        #check-copy,
+        #button-password {
+            width: 160px;
+            height: 30px;
+            margin: 25px auto 0 auto;
+            border-radius: 5px;
+            display: block;
+            background: #68bc53;
+            color: white;
+            border: none;
+            outline: none;
+        }
+
+        #check-copy {
+            width: 80px;
+            margin: 0;
+            position: absolute;
+            height: 35px;
+            right: 30px;
+            display: none;
+            top: 80px;
+        }
+
+        #check-copy.visible {
+            display: block;
+        }
+
+        #check-copy:hover,
+        #button-password {
+            background: #2e374b;
+            cursor: pointer;
+        }
+
+        #button-password:hover {
+            background: #68bc53;
+        }
+
+        .password-gen-bottom {
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+        .password-generator-box .btngreen2darkblue {
+            padding: 14px 20px;
+        }
+
+        .explanation-box {
+            font-size: x-small;
+            line-height: 1.5;
+            padding-top: 20px;
+            clear: both;
+            text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .password-generator-box .section-header h2, .password-generator-box .section-header h1 {
+                font-size: 28px;
+            }
+
+            .password-generator-box .sub-heading h4 {
+                font-size: 23px;
+            }
+
+            .password-generator-box {
+                padding: 5px 10px;
+                font: 16px/26px 'robotomedium', Helvetica, Helvetica Neue, Arial;
+                background: #f6f7f7;
+            }
+
+            .password-generator {
+                width: 300px;
+                padding: 15px 10px;
+                margin: 0 auto;
+            }
+
+            .text-password {
+                width: 180px;
+                height: 35px;
+                margin: 0 0 40px 0;
+                font-size: 15px;
+            }
+
+            .password-generator-box .section-header h2 {
+                line-height: 1.2;
+                margin-left: 0;
+                padding: 0;
+            }
+
+            .password-generator-box .section-header {
+                width: 100%;
+            }
+
+            #check-copy {
+                top: auto;
+                margin: 0;
+                right: 15px;
+                line-height: 33px;
+                padding: 1px 0;
+            }
+
+            .rating-password {
+                padding-left: 30px;
+                background-position: calc(50% - 35px) center;
+                line-height: 35px;
+                margin-left: -47.5px;
+                left: 50%;
+                top: 55px;
+                width: 95px;
+            }
+
+            .label-copy {
+                line-height: 20px;
+                font-size: 15px;
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            .label-copy span {
+                width: 20px;
+                height: 20px;
+                padding-left: 35px;
+                background-position: 0 -19px;
+                background-size: 20px;
+            }
+
+            .option-password .label-all {
+                clear: both;
+            }
+
+            .password-generator-box .colored-line {
+                background: #72a34e;
+                height: 4px;
+                width: 80px;
+                margin: auto;
+            }
+        }
+
+        /*** PASSWORD GENERATOR PAGE  END***/
+        /*** CN localization ***/
+        .cn-dir .qboxsection {
+            min-height: 530px;
+        }
+
+        .cn-dir .qboxwrapper {
+            min-height: 550px;
+        }
+
+        /*** CN localization END ***/
+    </style>
+</head>
+<body class="cn-dir">
+<div class="password-generator-box">
+    <div class="section-header">
+        <h1>随机密码生成器</h1>
+        <div class="sub-heading">
+            <h4>单击按钮即可生成可靠、随机且唯一的密码。</h4>
+        </div>
+    </div>
+    <div class="password-generator">
+        <input type="text" name="text-password" class="text-password" id="text-password">
+        <button id="check-copy">复制</button>
+        <div class="rating-password weak">弱</div>
+        <div class="rating-password medium">中</div>
+        <div class="rating-password good">好</div>
+        <div class="rating-password strong-score">强</div>
+        <div class="advanced-settings">
+            <div class="number-password clearfix">
+                <input type="text" name="number-password-text" class="number-password-text" value="16" id="number-of-characters">
+                <div class="counter-password">
+                    <div class="counter-plus number"></div>
+                    <div class="counter-minus number"></div>
+                </div>
+                <span class="caption-password">字符数</span>
+            </div>
+            <input type="checkbox" name="check-password" id="check-exclude" checked="checked">
+            <label for="check-exclude" class="label-exclude label-all"><span></span>排除相似的字符</label>
+            <input type="checkbox" name="check-password" id="check-hexadecimal">
+            <label for="check-hexadecimal" class="label-hexadecimal label-all"><span></span>十六进制，0-9，A-F</label>
+            <div class="option-password clearfix">
+                <input type="checkbox" name="check-password" id="check-uppercase" checked="checked">
+                <label for="check-uppercase" class="label-uppercase label-all"><span></span>A - Z</label>
+                <input type="checkbox" name="check-password" id="check-lowercase" checked="checked">
+                <label for="check-lowercase" class="label-lowercase label-all"><span></span>a - z</label>
+                <input type="checkbox" name="check-password" id="check-numeric-register" checked="checked">
+                <label for="check-numeric-register" class="label-numeric-register label-all"><span></span>0 - 9</label>
+                <input type="checkbox" name="check-password" id="check-character" checked="checked">
+                <label for="check-character" class="label-character label-all"><span></span></label>
+                <input type="text" name="text-password" class="symbols" id="symbols-character" value="!@#$%^&">
+            </div>
+        </div>
+        <div class="button-password-box">
+            <button id="button-password">生成并复制</button>
+        </div>
+        <div class="explanation-box">
+            此工具使用JavaScript在您的设备上生成密码（客户端） 。<br>这些密码不会传送到服务器。
+        </div>
+    </div>
+</div>
+<script src="/Libs/jquery/jquery.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/pwd-dict.js"></script>
+<script src="javascripts/utils.js"></script>
+<script>
+
+    /**
+     * Popup window
+     *
+     * @param {String} message
+     * @param {Number} time 时间参数，默认1500
+     * @returns the created dialog instance
+     */
+    BootstrapPopup = function(message,time){
+        var element = '<div id="popup-dialog" class="dialog modal fade msg-popup" style="margin-top: 70px"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-body text-center"></div></div></div></div>';
+        var $e,inteval = null;
+        if($('#popup-dialog').length>0){
+            $e = $('#popup-dialog');
+        }else{
+            $e=$(element);
+            $("body").append($e);
+        }
+        $e.find(".modal-body").html(message);
+        $e.modal({show:!0,backdrop:!1});
+        clearTimeout(inteval);
+        inteval=setTimeout(function(){
+            $e.modal("hide");
+        },time?time:1500);
+    };
+
+    $(document).ready(function () {
+        $('#text-password').keydown(function (e) {
+            e.preventDefault()
+        });
+        var plusMinusOne = function (minus, plus, inputNumber) {
+            $(minus).click(function () {
+                var $input = $(inputNumber);
+                var count = parseInt($input.val()) - 1;
+                count = count < 1 ? 1 : count;
+                $input.val(count);
+                $input.change();
+                return false;
+            });
+            $(plus).click(function () {
+                var $input = $(inputNumber);
+                $input.val(parseInt($input.val()) + 1);
+                $input.change();
+                return false;
+            });
+        };
+        var doNotEnterLetters = function (idElement) {
+            var elementJqId = "#" + idElement;
+            $(elementJqId).bind("change keyup input click", function () {
+                if (this.value < 1) {
+                    this.value = 1
+                }
+                if (this.value > 512) {
+                    this.value = 512
+                }
+                if (this.value.match(/[^0-9]/g)) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                }
+            });
+        };
+        plusMinusOne('.counter-minus.number', '.counter-plus.number', "#number-of-characters");
+        doNotEnterLetters("number-of-characters");
+        /* PASSWORD GENERATOR*/
+        var generatePasswordOnline = function () {
+            var checkingTheCheckbox = function (checkbox) {
+                return $(checkbox).prop('checked');
+            };
+            var checkCopy = checkingTheCheckbox("#check-copy");
+            var numberOfCharacters = $("#number-of-characters").val();
+            var symbolsСharacter = $("#symbols-character").val();
+            var checkExclude = checkingTheCheckbox("#check-exclude");
+            var checkHexadecimal = checkingTheCheckbox("#check-hexadecimal");
+            var checkUppercase = checkingTheCheckbox("#check-uppercase");
+            var checkLowercase = checkingTheCheckbox("#check-lowercase");
+            var checkNumericRegister = checkingTheCheckbox("#check-numeric-register");
+            var checkCharacter = checkingTheCheckbox("#check-character");
+            var checkUndef = undefined;
+            var passwordActive = RfapiJS["utils"].generatePassword(
+                numberOfCharacters,
+                checkUppercase,
+                checkLowercase,
+                checkNumericRegister,
+                checkCharacter,
+                symbolsСharacter,
+                checkUndef,
+                checkHexadecimal,
+                checkExclude
+            );
+            $("#text-password").val(passwordActive);
+            calcAndShowPasswordStrength(passwordActive);
+        };
+
+        /* SAVE PASSWORD*/
+        function copyToClipboard(elem) {
+            var targetId = "_hiddenCopyText_";
+            var isInput = elem.tagName === "INPUT";
+            var origSelectionStart, origSelectionEnd;
+            if (isInput) {
+                target = elem;
+                origSelectionStart = elem.selectionStart;
+                origSelectionEnd = elem.selectionEnd;
+            } else {
+                target = $(targetId)[0];
+                if (!target) {
+                    var cssValues = {"position": "absolute", "left": "-9999px", "top": "0"}
+                    var target = $("<textarea>").css(cssValues).attr("id", "targetId");
+                    $("body").append(target);
+                }
+                target.text() = elem.text();
+            }
+            var currentFocus = $(":focus");
+            target.focus();
+            target.setSelectionRange(0, target.value.length);
+            var succeed;
+            try {
+                succeed = document.execCommand("copy");
+            } catch (e) {
+                succeed = false;
+            }
+            if (currentFocus && typeof currentFocus.focus === "function") {
+                currentFocus.focus();
+            }
+            if (isInput) {
+                elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+            } else {
+                target.text() = "";
+            }
+            return succeed;
+        }
+
+        /* SAVE PASSWORD END*/
+        if (localStorage['pasword']) {
+            $("#text-password").val(localStorage['pasword']);
+            $("#check-copy").addClass("visible");
+            calcAndShowPasswordStrength(localStorage['pasword']);
+        }
+        $('#button-password').click(function () {
+            if (!($("#check-hexadecimal").prop('checked')) &&
+                !($("#check-uppercase").prop('checked')) &&
+                !($("#check-lowercase").prop('checked')) &&
+                !($("#check-numeric-register").prop('checked')) &&
+                !($("#check-character").prop('checked'))) {
+                return false;
+            } else {
+                generatePasswordOnline();
+                localStorage['pasword'] = $("#text-password").val();
+                copyToClipboard($("#text-password")[0]);
+                $("#check-copy").addClass("visible");
+                BootstrapPopup('生成并复制成功!', 500);
+            }
+        });
+
+        $('#check-copy').click(function () {
+            copyToClipboard($("#text-password")[0]);
+            BootstrapPopup('复制成功!', 500);
+        });
+
+        function calcAndShowPasswordStrength(pasword) {
+            var passwordStrength = RfapiJS["SecurityScore"].CalcPasswordStrength(pasword);
+            if (passwordStrength >= 79) {
+                $(".rating-password.strong-score").addClass("show-now")
+            } else {
+                $(".rating-password.strong-score").removeClass("show-now")
+            }
+            if ((passwordStrength < 79) && (passwordStrength >= 52)) {
+                $(".rating-password.good").addClass("show-now")
+            } else {
+                $(".rating-password.good").removeClass("show-now")
+            }
+            if ((passwordStrength >= 40) && (passwordStrength < 52)) {
+                $(".rating-password.medium").addClass("show-now")
+            } else {
+                $(".rating-password.medium").removeClass("show-now")
+            }
+            if (passwordStrength < 40) {
+                $(".rating-password.weak").addClass("show-now")
+            } else {
+                $(".rating-password.weak").removeClass("show-now")
+            }
+        }
+
+        var eventPasswordGen = function () {
+            if (!$("#check-hexadecimal").prop('checked')) {
+                $("#check-uppercase").prop('disabled', true);
+                $("#check-lowercase").prop('disabled', true);
+                $("#check-numeric-register").prop('disabled', true);
+                $("#check-character").prop('disabled', true);
+                $("#symbols-character").prop('disabled', true);
+                $('.counter-minus.minimal').off();
+                $('.counter-plus.minimal').off();
+            } else {
+                $("#check-uppercase").prop('disabled', false);
+                $("#check-lowercase").prop('disabled', false);
+                $("#check-numeric-register").prop('disabled', false);
+                $("#check-character").prop('disabled', false);
+                $("#symbols-character").prop('disabled', false);
+            }
+            ;
+        };
+        $('.label-hexadecimal').click(function () {
+            eventPasswordGen();
+        });
+        var eventOptionPassword = function () {
+            $("#minimal-number-of-digits").prop('disabled', true);
+            $('.counter-minus.minimal').off();
+            $('.counter-plus.minimal').off();
+        };
+        $('.advanced-settings').click(function () {
+            eventOptionPassword();
+        });
+        /* PASSWORD GENERATOR END*/
+    })
+    ;
+</script>
+</body>
+</html>

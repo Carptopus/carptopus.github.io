@@ -1,0 +1,758 @@
+<!doctype html>
+<html dir="ltr" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>二维码编解码</title>
+    <link rel="shortcut icon" href="QRCode.png">
+</head>
+<style>
+body {
+    margin: 0;
+    font-family: '微软雅黑';
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+    overflow: hidden;
+}
+
+.clearfix {
+    /* Fix IE8 */
+    zoom: 1;
+}
+
+#header {
+    background-color: #F9F9F9;
+    height: 69px;
+    border-bottom: 1px solid #EEE;
+}
+#header .inner {
+    width: 500px;
+    margin: 0 auto;
+}
+#header h1 {
+    float: left;
+    font-size: 22px;
+    height: 69px;
+    line-height: 69px;
+    margin: 0;
+    font-weight: normal;
+    color: #AAA;
+}
+#header .toggle {
+    position: relative;
+    width: 130px;
+    float: right;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 20px;
+    border-radius: 15px;
+    background-color: #FFF;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, .3);
+}
+#header .toggle a {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    width: 50px;
+    height: 30px;
+    padding-left: 10px;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    font-size: 12px;
+    text-align: center;
+    color: #207FCA;
+    transition: .3s;
+}
+#header .toggle a.decode {
+    left: 60px;
+    padding-right: 10px;
+}
+#header .toggle .navbg {
+    position: absolute;
+    width: 70px;
+    height: 30px;
+    top: 0;
+    z-index: 1;
+    border-radius: 15px;
+    background: #207FCA;
+    transition: .3s;
+}
+#header .toggle a.encode, #header .toggle.sec a.decode {
+    color: #FFF;
+}
+#header .toggle a.decode, #header .toggle.sec a.encode {
+    color: #207FCA;
+}
+#header .toggle.encode-hover a.encode, #header .toggle.decode-hover a.decode {
+    color: #FFF;
+}
+#header .toggle.encode-hover a.decode, #header .toggle.decode-hover a.encode {
+    color: #207FCA;
+}
+#header .toggle.sec .navbg, #header .toggle.decode-hover .navbg {
+    left: 60px;
+}
+#header .toggle .navbg, #header .toggle.encode-hover .navbg {
+    left: 0;
+}
+
+
+#qrdecode {
+    display: none;
+    width: 500px;
+    height: 585px;
+    margin: 30px auto;
+    padding: 20px;
+    font-size: 14px;
+}
+.box {
+    border-radius: 10px;
+    border: 4px dashed #CCC;
+    padding: 1px;
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    -webkit-user-select: none;
+    transition: 1s;
+}
+.box.dropout {
+    border-color: #207FCA;
+}
+.box.dropin {
+    background-color: #207FCA;
+    border-color: #FFF;
+}
+.box.dropin .drop p {
+    color: #FFF;
+}
+.box .panel {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 490px;
+    height: 380px;
+}
+.box .preview {
+    display: none;
+}
+.box .preview canvas {
+    margin: 40px 95px;
+}
+.box .preview .close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Times New Roman';
+    cursor: default;
+}
+.box .preview .close:hover {
+    color: #F62;
+}
+.box .upload {
+    /* display: none; */
+}
+.box .upload p {
+    position: absolute;
+    z-index: 1;
+    height: 40px;
+    width: 490px;
+    top: 120px;
+    left: 0;
+    text-align: center;
+    font-size: 32px;
+    line-height: 40px;
+    margin: 0;
+    color: #CCC;
+}
+#src-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: default;
+}
+.box .upload .upimg {
+    position: absolute;
+    z-index: 3;
+    width: 110px;
+    height: 40px;
+    overflow: hidden;
+    margin: 170px 190px;
+}
+.box .upload .upimg label {
+    display: block;
+    height: 40px;
+    width: 110px;
+    background: #207FCA;
+    background-size: 40px 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #FFF;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+.box .upload .upimg label:hover {
+    background: #2279BE;
+}
+
+.box .upload .upimg input {
+    width: 198px;
+    height: 28px;
+    display: none;
+}
+.box .drop {
+    display: none;
+}
+
+.box .drop p {
+    height: 40px;
+    margin: 170px 0;
+    text-align: center;
+    font-size: 32px;
+    line-height: 40px;
+    color: #CCC;
+}
+
+/* Result */
+.result {
+    display: none;
+    margin-top: 20px;
+}
+
+.result .hd {
+    height: 30px;
+    text-align: right;
+}
+
+.result .hd h3 {
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    float: left;
+}
+.result .hd button {
+    float: right;
+    height: 24px;
+    border: 0;
+    margin: 3px 0;
+    padding: 0 10px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-family: '微软雅黑';
+    color: #FFF;
+    background-color: #666;
+}
+.result .hd span {
+    display: none;
+    margin-right: 10px;
+    height: 30px;
+    line-height: 28px;
+    font-size: 12px;
+    color: #5B8;
+}
+
+.result textarea {
+    margin: 5px 0 0 0;
+    width: 486px;
+    padding: 6px;
+    line-height: 22px;
+    height: 66px;
+    border: 1px solid #CCC;
+    border-radius: 2px;
+    outline: none;
+    resize: none;
+}
+
+#mask {
+    display: none;
+    position: absolute;
+    background: rgba(255, 255, 255, .1);
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    min-width: 530px;
+    min-height: 675px;
+    z-index: 5;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+#mask .mbox {
+    width: 500px;
+    height: 390px;
+    background: rgba(22, 88, 255, .1);
+    margin: 45px auto 0;
+}
+
+#qrencode {
+    width: 500px;
+    margin: 0 auto;
+}
+
+
+#input-area {
+    margin-top: 20px;
+}
+#input-area textarea {
+    width: 488px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    height: 80px;
+    padding: 5px;
+    outline: none;
+    resize: none;
+    line-height: 20px;
+    font-size: 13px;
+}
+#input-area textarea:hover {
+    border-color: #AAA;
+}
+
+#input-area textarea:focus {
+    border-color: #207FCA;
+}
+#input-area div {
+    text-align: right;
+    margin: 5px 0;
+}
+#input-area button {
+    padding: 3px 8px;
+    font-family: '微软雅黑';
+    margin: 0;
+}
+
+.resultbox {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+.resultbox img {
+    max-width: 500px;
+    max-height: 500px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+.resultbox canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+</style>
+<body>
+<div id="header">
+    <div class="inner clearfix">
+        <h1>二维码编解码</h1>
+        <div class="toggle">
+            <a class="encode" href="#encode">编码</a><a class="decode" href="#decode">解码</a>
+            <div class="navbg"></div>
+        </div>
+    </div>
+</div>
+<div id="qrdecode">
+    <div class="box">
+        <div class="panel preview">
+            <span class="close">&times;</span>
+            <canvas id="qrimg" width="300" height="300"></canvas>
+        </div>
+        <div class="panel upload">
+            <input type="text" id="src-input"/>
+            <p>拖拽，粘贴或者点击上传按钮</p>
+            <div class="upimg">
+                <label for="src-file">上传文件</label>
+                <input type="file" id="src-file"/>
+            </div>
+        </div>
+        <div class="panel drop">
+            <p>拖拽图片到这里</p>
+        </div>
+    </div>
+    <div class="result">
+        <div class="hd"><h3>解析结果</h3></div>
+        <textarea id="result-text" readonly="true"></textarea>
+    </div>
+</div>
+<div id="qrencode">
+    <div id="input-area">
+        <textarea id="input-text"></textarea>
+    </div>
+    <div class="resultbox">
+        <img src="" id="resultimg"/>
+        <div id="qrcanvas"></div>
+    </div>
+</div>
+<div id="mask"><div class="mbox"></div></div>
+<script src="/Libs/jquery/jquery.min.js"></script>
+<script src="libs/qrbase.js"></script>
+<script src="libs/encode.js"></script>
+<script src="libs/decode.js"></script>
+<script>
+(function ($) {
+    // 在 Canvas 绘制图片
+    var inBox = false,
+        isDecode = false,
+        showImg = function (url, callback) {
+            var img = new Image(),
+                canvas = $('#qrimg').get(0),
+                ctx = canvas.getContext('2d'),
+                canvasSize = 300;
+
+            if (!url) {
+                return;
+            }
+            img.onload = function () {
+                var imgSize, zoom,
+                    imgW = img.width, imgH = img.height,
+                    pos = {
+                        x: 0,
+                        y: 0
+                    };
+
+                ctx.fillStyle = 'rgb(255, 255, 255)';
+                ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+                imgSize = Math.max(imgW, imgH);
+
+                if (imgSize > canvasSize) {
+                    zoom = canvasSize / imgSize;
+                    imgW = imgW * zoom;
+                    imgH = imgH * zoom;
+                }
+                pos.x = Math.floor((canvasSize - imgW) / 2);
+                pos.y = Math.floor((canvasSize - imgH) / 2);
+                ctx.drawImage(img, pos.x, pos.y, imgW, imgH);
+
+                if ($.isFunction(callback)) {
+                    callback();
+                }
+            };
+            img.src = url;
+        },
+
+        getFromClipboard = function (clipboard, callback) {
+            var i = 0,
+                items, item, types,
+                reader = new FileReader();
+
+            if (!clipboard || !clipboard.items) {
+                return;
+            }
+
+            items = clipboard.items;
+
+            item = items[0];
+            types = clipboard.types || [];
+
+            for (; i < types.length; i++) {
+                if (types[i] === 'Files') {
+                    item = items[i];
+                    break;
+                }
+            }
+            if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
+                reader.onload = function (e) {
+                    if ($.isFunction(callback)) {
+                        callback(e.target.result);
+                    }
+                };
+
+                reader.readAsDataURL(item.getAsFile());
+            }
+        },
+
+        getFromDropbox = function (files, callback) {
+            var i = 0,
+                file,
+                reader = new FileReader();
+
+            for (; i < files.length; i++) {
+                file = files[i];
+                if (file.type.match(/^image\//i)) {
+                    break;
+                }
+            }
+
+            reader.onload = function (e) {
+                if ($.isFunction(callback)) {
+                    callback(e.target.result);
+                }
+            };
+
+            reader.readAsDataURL(file);
+        },
+
+        showResult = function (text) {
+            $('#result-text').val(text);
+            $('.result').show();
+        },
+
+        closeResult = function () {
+            $('.box .panel').hide();
+            $('.box .upload').show();
+            $('#result-text').val('');
+            $('.result').hide();
+        },
+
+        togglePage = function (toggle) {
+            if (toggle) {
+                $('.toggle').data('sec', 'encode');
+                $('.toggle').removeClass('sec');
+                $('#qrencode').show();
+                $('#qrdecode').hide();
+                $('#header h1').html('二维码编码');
+                $('title').html('二维码编码');
+                isDecode = false;
+                closeResult();
+            } else {
+                $('.toggle').data('sec', 'decode');
+                $('.toggle').addClass('sec');
+                $('#qrdecode').show();
+                $('#qrencode').hide();
+                $('#header h1').html('二维码解码');
+                $('title').html('二维码解码');
+                isDecode = true;
+            }
+        },
+
+        init = function () {
+            var hash = window.location.hash.substring(1);
+            togglePage(hash !== 'decode');
+        };
+
+
+    // 直接粘贴图片
+    $('#src-input').on('paste', function (e) {
+        $(this).val('');
+        getFromClipboard(e.originalEvent.clipboardData, function (url) {
+            showImg(url, function () {
+                $('.box .panel').hide();
+                $('.box .preview').show();
+                showResult($('#qrimg').qrdecode());
+            });
+        });
+    });
+
+    $('#src-input').on('blur focus', function () {
+        $(this).val('');
+    });
+
+    // 输入图片网址(跨域问题，放弃)，可以用本域服务器做跳板解决
+    /* $('.header .submit').on('click', function () {
+        var url = $('#src-input').val();
+        if (url) {
+            showImg(url, function () {
+                $('.box .panel').hide();
+                $('.box .preview').show();
+                showResult($('#qrimg').qrdecode());
+            });
+        }
+    }); */
+
+    /* 拖拽上传 */
+    document.addEventListener("dragenter", function (e) {
+        e.stopPropagation();
+        if (isDecode) {
+            $('#mask').show();
+        }
+    });
+    document.addEventListener("dragleave", function (e) {
+        e.stopPropagation();
+    });
+
+    $('#mask')[0].addEventListener("dragenter", function (e) {
+        e.stopPropagation();
+        $('.box').addClass('dropout').find('.drop p').html('拖拽图片到这里');
+        $('.box .panel').hide();
+        $('.box .drop').show();
+    });
+
+    $('#mask')[0].addEventListener("dragleave", function (e) {
+        e.stopPropagation();
+        setTimeout(function () {
+            if (!inBox) {
+                $('#mask').hide();
+                $('.box').removeClass('dropout').find('.drop p').html('拖拽图片到这里');
+                $('.box .panel').hide();
+                $('.box .upload').show();
+            }
+        }, 100);
+    });
+
+    $('#mask .mbox')[0].addEventListener("dragenter", function (e) {
+        e.stopPropagation();
+        inBox = true;
+        $('.box').addClass('dropin').find('.drop p').html('放开那只鼠标');
+
+    });
+    $('#mask .mbox')[0].addEventListener("dragleave", function (e) {
+        e.stopPropagation();
+        inBox = false;
+        $('.box').removeClass('dropin').find('.drop p').html('拖拽图片到这里');
+
+    });
+    $('#mask .mbox')[0].addEventListener("dragover", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+
+    $('#mask .mbox')[0].addEventListener("drop", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.dataTransfer.files.length) {
+            getFromDropbox(e.dataTransfer.files, function (url) {
+                showImg(url, function () {
+                    $('#mask').hide();
+                    $('.box').removeClass('dropin dropout');
+                    $('.box .panel').hide();
+                    $('.box .preview').show();
+                    showResult($('#qrimg').qrdecode());
+                });
+            });
+        }
+    });
+
+    /* 普通上传 */
+    $('#src-file').on('change', function (e) {
+        var file = e.target.files[0],
+            reader = new FileReader();
+
+        if (!file) {
+            return;
+        }
+
+        reader.onload = function (e) {
+            showImg(e.target.result, function () {
+                $('#mask').hide();
+                $('.box').removeClass('dropin dropout');
+                $('.box .panel').hide();
+                $('.box .preview').show();
+                showResult($('#qrimg').qrdecode());
+            });
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    /* 关闭按钮 */
+    $('.box .preview .close').on('click', closeResult);
+
+    /* 切换按钮 Hover */
+    $('.toggle a').hover(function () {
+        $('.toggle').addClass($(this).attr('class') + '-hover');
+    }, function () {
+        $('.toggle').removeClass('decode-hover encode-hover');
+    });
+
+    /* 切换按钮点击 */
+    $('.toggle a').on('click', function () {
+        togglePage($(this).hasClass('encode'));
+    });
+    
+    $('#input-text').on('focus', function () {
+        $('#input-text').select()
+    });
+    /* QRCode 编码 */
+    $('#input-text').on('keyup input', function () {
+        var text = $('#input-text').val(),
+            cfg = {};
+        if (!text) {
+            $('.resultbox').hide();
+            return;
+        }
+
+        cfg.text = text;
+        $('#qrcanvas').qrcode(cfg);
+        setTimeout(function () {
+            var canvas = $('#qrcanvas canvas')[0],
+                posW = canvas.width > 500 ? 500 : canvas.width;
+            $('#resultimg').attr('src', canvas.toDataURL("image/png")).css({
+                left: (500 - posW) / 2
+            });
+            $('.resultbox').show();
+        }, 10);
+    });
+    
+    var paramValueObj = {};
+    url = window.location.href;
+    url = url.replace('&amp;', '&');
+    var queryUrl = url.split('?')[1];
+    if (queryUrl) {//存在参数
+        var queryArr = queryUrl.split('&');
+        for (var i in queryArr) {
+            var tmp_arr = queryArr[i].split('=');
+            paramValueObj[decodeURIComponent(tmp_arr[0])] = decodeURI(tmp_arr[1]);
+        }
+    }
+    if(paramValueObj.downloadPath){
+        $('#input-text').val('https://file.zhangbohun.com/d/Local/'+paramValueObj.downloadPath.slice(5)).keyup();
+        // getLocalIPs(function(ips) {
+        //$('#input-text').val('http://'+ips[0]+':8686/'+paramValueObj.downloadPath).keyup();
+        //$('#input-text').val('https://file.zhangbohun.com/chfs/shared/'+paramValueObj.downloadPath.slice(5)).keyup();
+        // });
+    }
+    if(paramValueObj.uploadPath){
+        $('#input-text').val('https://file.zhangbohun.com/Local/'+paramValueObj.uploadPath).keyup();
+        //getLocalIPs(function(ips) {
+        //$('#input-text').val('http://'+ips[0]+':8667/'+paramValueObj.uploadPath).keyup();
+        //});
+    }
+    if(paramValueObj.text){
+        $('#input-text').val(paramValueObj.text).keyup();
+    }
+    function getLocalIPs(callback) {
+        var ips = [];
+        var RTCPeerConnection = window.RTCPeerConnection ||
+            window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+
+        var pc = new RTCPeerConnection({
+            // Don&#39;t specify any stun/turn servers, otherwise you will
+            // also find your public IP addresses.
+            iceServers: []
+        });
+        // Add a media line, this is needed to activate candidate gathering.
+        pc.createDataChannel('');
+        // onicecandidate is triggered whenever a candidate has been found.
+        pc.onicecandidate = function(e) {
+            if (!e.candidate) { // Candidate gathering completed.
+                pc.close();
+                callback(ips);
+                return;
+            }
+        var ip = /^candidate:.+ (\S+) \d+ typ/.exec(e.candidate.candidate)[1];
+        if (ips.indexOf(ip) == -1) // avoid duplicate entries (tcp/udp)
+            ips.push(ip);
+        };
+        pc.createOffer(function(sdp) {
+            pc.setLocalDescription(sdp);
+        }, function onerror() {});
+    }
+    window.addEventListener("hashchange", init, false);
+    init();
+}(jQuery, window));
+</script>
+</body>
+</html>

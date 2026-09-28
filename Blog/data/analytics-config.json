@@ -1,0 +1,11 @@
+{
+  "google": {
+    "enabled": true,
+    "id": "G-D9ZL8P1H1B",
+    "site": "carptopus.github.io"
+  },
+  "baidu": {
+    "enabled": true,
+    "sitecode": "86a3b05b68f0eb551f482adbb942fba3"
+  }
+}

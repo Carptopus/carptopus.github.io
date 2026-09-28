@@ -1,0 +1,54 @@
+<!doctype html>
+<html style="height:100%">
+<head>
+    <title>MySearch</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="search.png">
+</head>
+<script>
+    //解决浏览器拖拽搜索空格变加号bug
+    if (window.location.href.indexOf('+') != -1) {
+        window.location.href = window.location.href.replace(/\+/g, ' ');
+    }
+
+    var paramValueObj = {};
+    url = window.location.href;
+    var queryUrl = url.split('?')[1];
+    if (queryUrl) {//存在参数
+        var queryArr = queryUrl;//.split('&')
+        //for (var i in queryArr) {
+            var tmp_arr = queryArr.split('=');//[i]
+            paramValueObj[decodeURIComponent(tmp_arr[0])] = decodeURIComponent(tmp_arr[1]);
+        //}
+    }
+
+    var keyword = paramValueObj.keyword ? paramValueObj.keyword : '';
+    document.title = keyword + ' ->by MySearch';
+</script>
+<body style="height:100%;padding: 0;margin: 0">
+<div id="my-search" style="height: 40px;padding-left: 5px;padding-top: 5px;">
+    <span>MySearch:</span>
+    <input id="keyword" type="text" style="width: 30%; height: 20px;"/>
+</div>
+<div style="height: calc(100% - 55px);padding: 0;margin: 0;text-align:center">
+    <div style="margin:0 auto;height: 100%">
+        <iframe id="left-iframe" width="49%" height="100%" src=""></iframe>
+        <iframe id="right-iframe" width="49%" height="100%" src=""></iframe>
+    </div>
+</div>
+</body>
+<script>
+    var keywordInput = document.querySelector("#keyword");
+    keywordInput.focus();
+    keywordInput.value = keyword;
+    keywordInput.onkeypress = function (event) {
+        if (event.code === 'Enter') {
+            location.href = location.origin + '/MySearch/?keyword=' + encodeURIComponent(document.querySelector("#keyword").value);
+        }
+    };
+    if (keyword) {
+        document.querySelector("#left-iframe").src = 'https://www.baidu.com/s?wd=' + encodeURIComponent(keyword);
+        document.querySelector("#right-iframe").src = 'https://www.google.com/search?newwindow=1&q=' + encodeURIComponent(keyword);
+    }
+</script>
+</html>

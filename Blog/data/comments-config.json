@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "owner": "Carptopus",
+  "repo": "carptopus.github.io",
+  "labels": [
+    "Gitalk"
+  ],
+  "perPage": 10,
+  "lazyRootMargin": "400px 0px",
+  "returnPollDelays": [
+    3000,
+    8000,
+    15000,
+    30000
+  ]
+}

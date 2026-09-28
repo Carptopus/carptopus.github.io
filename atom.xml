@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Carptopus&apos; Blog</title>
+  <subtitle>个人博客</subtitle>
+  <author><name>carptopus</name></author>
+  <link href="https://carptopus.github.io/atom.xml" rel="self"/>
+  <link href="https://carptopus.github.io/"/>
+  <id>https://carptopus.github.io/</id>
+  <updated>2026-02-23T19:20:00+08:00</updated>
+  <entry>
+    <title>MyPodsync播客RSS同步软件</title>
+    <link href="https://carptopus.github.io/2026/02/23/MyPodsync%E6%92%AD%E5%AE%A2RSS%E5%90%8C%E6%AD%A5%E8%BD%AF%E4%BB%B6/"/>
+    <id>https://carptopus.github.io/2026/02/23/MyPodsync%E6%92%AD%E5%AE%A2RSS%E5%90%8C%E6%AD%A5%E8%BD%AF%E4%BB%B6/</id>
+    <updated>2026-02-23T19:20:00+08:00</updated>
+    <summary type="text">说明还是个给自己写的软件，目前试用感觉还行分享下吧。
+最近播客又有点火，但是都在抄国外搞什么视频播客莫名其妙还不往播客平台发，有点离谱。为了能听到这些 YouTube 还有 Bilibili 上的视频播客，先是搜了下类似能力的软件。查到已经有 Podsync 可以同步 YouTu</summary>
+  </entry>
+  <entry>
+    <title>WebDataMonitor自定义网络数据监控框架</title>
+    <link href="https://carptopus.github.io/2020/02/19/WebDataMonitor%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E7%9B%91%E6%8E%A7%E6%A1%86%E6%9E%B6/"/>
+    <id>https://carptopus.github.io/2020/02/19/WebDataMonitor%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E7%9B%91%E6%8E%A7%E6%A1%86%E6%9E%B6/</id>
+    <updated>2020-02-19T21:30:49+08:00</updated>
+    <summary type="text">这也是一个Chrome浏览器扩展应用，但我愿称之为一个框架，以我的理解，并不是只有代码层面的各种框架，只要是这种由上而下对操作逻辑的抽象复用都可以看做是一种框架。
+以上也是这个扩展所贯彻的设计思路：首先提供监控数据最基础的功能（任务配置管理，网络数据请求，Chrome 通知提醒）</summary>
+  </entry>
+  <entry>
+    <title>无损压缩算法理论学习总结</title>
+    <link href="https://carptopus.github.io/2019/04/01/%E6%97%A0%E6%8D%9F%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
+    <id>https://carptopus.github.io/2019/04/01/%E6%97%A0%E6%8D%9F%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</id>
+    <updated>2019-04-01T13:44:56+08:00</updated>
+    <summary type="text">基本说明信息熵： 每条消息中包含的信息的平均量。消息的熵乘以消息的长度决定了消息可以携带多少信息。任何无损压缩技术不可能让一比特的消息携带超过一比特的信息。以下说明中以“压缩”代替“无损压缩”以本人的理解，可以将压缩算法分为两个层面：  
+
+熵编码：根据消息中每个符号出现的概率，</summary>
+  </entry>
+  <entry>
+    <title>《精要主义》之精要</title>
+    <link href="https://carptopus.github.io/2019/01/11/%E3%80%8A%E7%B2%BE%E8%A6%81%E4%B8%BB%E4%B9%89%E3%80%8B%E4%B9%8B%E7%B2%BE%E8%A6%81/"/>
+    <id>https://carptopus.github.io/2019/01/11/%E3%80%8A%E7%B2%BE%E8%A6%81%E4%B8%BB%E4%B9%89%E3%80%8B%E4%B9%8B%E7%B2%BE%E8%A6%81/</id>
+    <updated>2019-01-11T18:30:44+08:00</updated>
+    <summary type="text">0，作者所谓 “精要主义” 其实是多个与 “少” 相关的人生策略的综合
+1，这个世界是 “多” 的，要把握住 “多” 中的 “少”面对繁多而混乱的事物，我们需要有具体的关注点（目的，条件筛选，标准量化）面对模糊不确定的事物，我们要把握住其中明确的部分（科学，奥卡姆剃刀，逻辑学，概</summary>
+  </entry>
+  <entry>
+    <title>VolumeManager网页音量控制</title>
+    <link href="https://carptopus.github.io/2018/12/07/VolumeManager%E7%BD%91%E9%A1%B5%E9%9F%B3%E9%87%8F%E6%8E%A7%E5%88%B6/"/>
+    <id>https://carptopus.github.io/2018/12/07/VolumeManager%E7%BD%91%E9%A1%B5%E9%9F%B3%E9%87%8F%E6%8E%A7%E5%88%B6/</id>
+    <updated>2018-12-07T13:55:20+08:00</updated>
+    <summary type="text">这也是一个Chrome浏览器扩展应用。它的功能是控制网页音频视频的音量大小。下载链接：百度网盘Chrome商店：链接控制界面如下：   
+网上其实可以找到很多类似的音量控制的扩展，不过我做的这个有一点微小的进步：部分实现了自动记忆音量配置的功能做这个扩展的初心最想要实现的功能就是</summary>
+  </entry>
+  <entry>
+    <title>冥想练习</title>
+    <link href="https://carptopus.github.io/2018/11/06/%E5%86%A5%E6%83%B3%E7%BB%83%E4%B9%A0/"/>
+    <id>https://carptopus.github.io/2018/11/06/%E5%86%A5%E6%83%B3%E7%BB%83%E4%B9%A0/</id>
+    <updated>2018-11-06T00:05:04+08:00</updated>
+    <summary type="text">目的：锻炼心力，治疗心灵的软弱，摈弃妄念，保持安定、强大、清明的心态。
+方法：1.放空大脑，排除外界干扰2.专注于呼吸，不中断地数到10再数回13.身体扫描，感受身体从脚到脑4.专注一个主题或概念或空，体察自己的思想、情绪、行动和身心感受
+泛化之，活在当下，活在此刻，意识在心流。</summary>
+  </entry>
+  <entry>
+    <title>RegexExtract网页文本提取</title>
+    <link href="https://carptopus.github.io/2017/01/16/RegexExtract%E7%BD%91%E9%A1%B5%E6%96%87%E6%9C%AC%E6%8F%90%E5%8F%96/"/>
+    <id>https://carptopus.github.io/2017/01/16/RegexExtract%E7%BD%91%E9%A1%B5%E6%96%87%E6%9C%AC%E6%8F%90%E5%8F%96/</id>
+    <updated>2017-01-16T01:33:08+08:00</updated>
+    <summary type="text">这是一个Chrome浏览器扩展应用。它的功能是从网页中提取你用正则表达式描述的文本内容。下载链接：百度网盘Chrome商店：链接界面如下：   
+如上图，共有三种搜索模式：节点模式，搜索HTML节点文本，优点是可以高亮搜索结果位置。文本模式，搜索你看到的网页文本，常用在搜索结果包</summary>
+  </entry>
+  <entry>
+    <title>TextTools文本处理小工具</title>
+    <link href="https://carptopus.github.io/2016/05/24/TextTools%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B0%8F%E5%B7%A5%E5%85%B7/"/>
+    <id>https://carptopus.github.io/2016/05/24/TextTools%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B0%8F%E5%B7%A5%E5%85%B7/</id>
+    <updated>2016-05-24T14:26:49+08:00</updated>
+    <summary type="text">这是个用Python写的简单的文本处理小工具，图形界面用Tkinter库实现的。为了方便大家使用，我用pyinstaller把程序打包成了可以直接运行的exe文件（不过不是单文件，打包成单文件的话每次运行程序都需要解压，会很慢。）下载链接：百度网盘
+这个程序比较适合使用鼠标操作，</summary>
+  </entry>
+  <entry>
+    <title>关于代码复用</title>
+    <link href="https://carptopus.github.io/2016/04/04/%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/"/>
+    <id>https://carptopus.github.io/2016/04/04/%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/</id>
+    <updated>2016-04-04T13:41:34+08:00</updated>
+    <summary type="text">关于代码复用的一些整理总结，很简单，但是平常不会细想吧。
+代码复用是有两个方向的，一种是对相对下层的具体的操作的复用，从实现出发，例如各种语言的工具类库、GUI编程中的界面组件等等；另一种则是对上层抽象的操作逻辑的复用，从需求出发，面向抽象（接口）编程、设计模式、框架，例如MVC</summary>
+  </entry>
+  <entry>
+    <title>记一次网络搜索</title>
+    <link href="https://carptopus.github.io/2016/02/29/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BD%91%E7%BB%9C%E6%90%9C%E7%B4%A2/"/>
+    <id>https://carptopus.github.io/2016/02/29/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BD%91%E7%BB%9C%E6%90%9C%E7%B4%A2/</id>
+    <updated>2016-02-29T16:09:48+08:00</updated>
+    <summary type="text">记一次波折而有趣的搜索资源过程。起因，很明显在搜狗壁纸上的在这些 RainbowBlaxx 组合的壁纸是来自一个系列的：  
+但经过搜索之后发现在搜狗壁纸的资源库里并没有完整系列的图片：  
+于是上网搜索，找到了两个资源：贴吧链接论坛链接  
+第一个链接里的帖子资源链接指向一个微</summary>
+  </entry>
+  <entry>
+    <title>阅读碎片化的对策</title>
+    <link href="https://carptopus.github.io/2016/02/13/%E9%98%85%E8%AF%BB%E7%A2%8E%E7%89%87%E5%8C%96%E7%9A%84%E5%AF%B9%E7%AD%96/"/>
+    <id>https://carptopus.github.io/2016/02/13/%E9%98%85%E8%AF%BB%E7%A2%8E%E7%89%87%E5%8C%96%E7%9A%84%E5%AF%B9%E7%AD%96/</id>
+    <updated>2016-02-13T15:06:54+08:00</updated>
+    <summary type="text">所谓阅读的“碎片化”有两方面，一方面是信息的碎片化，每篇文章都很短小，一次性可能会看很多篇话无相关性的文章；另一方面是阅读时间碎片化，时间短，心理状态也差，看完一篇稍长的文章用来思考的时间太短。这样无论如何都会遇到一个问题，短时间内大脑对于某一主题的思考只是预热了一下没进入状态，</summary>
+  </entry>
+  <entry>
+    <title>《浪潮之巅》读后感想</title>
+    <link href="https://carptopus.github.io/2016/01/12/%E3%80%8A%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E6%83%B3/"/>
+    <id>https://carptopus.github.io/2016/01/12/%E3%80%8A%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E6%83%B3/</id>
+    <updated>2016-01-12T12:02:44+08:00</updated>
+    <summary type="text">基本是花了一天半看完的这本书，在图书馆看书感觉时间会变慢。
+这本书是在讲计算机以及相关科技发展的特别规律，它就像浪潮一样，一浪过后又兴一浪。正好赶上浪尖的人便可以飞腾一会儿，然后或者没赶上下一浪而跌落，或者又冲上下一个浪头。
+书中故事很丰富，章节基本是按时序一浪一浪推进的，从计算</summary>
+  </entry>
+  <entry>
+    <title>什么是经典</title>
+    <link href="https://carptopus.github.io/2015/11/26/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%8F%E5%85%B8/"/>
+    <id>https://carptopus.github.io/2015/11/26/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%8F%E5%85%B8/</id>
+    <updated>2015-11-26T09:44:46+08:00</updated>
+    <summary type="text">大家都总说看书要看经典的，看电影也要经典的，究竟经典是什么意思？
+
+经典指具有典范性、权威性的；经久不衰的万世之作；经过历史选择出来的 “最有价值经典的”; 最能表现本行业的精髓的；最具代表性的；最完美的作品。
+
+我觉得经典的解释里关键一点就是引入时间这一维度来为事物作价值上的评</summary>
+  </entry>
+  <entry>
+    <title>正则表达式总结</title>
+    <link href="https://carptopus.github.io/2015/11/23/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%80%BB%E7%BB%93/"/>
+    <id>https://carptopus.github.io/2015/11/23/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%80%BB%E7%BB%93/</id>
+    <updated>2015-11-23T12:47:45+08:00</updated>
+    <summary type="text">正则表达式之所以这么难以理解也许就是因为它所描述的东西本身十分抽象。以下，我将尝试以我目前的见识水平总结一下对正则表达式相关的知识的理解。
+正则表达式最大的作用就是从一大段纷乱的字符串中寻找并定位符合条件的字符串，而具体的一条正则表达式的含义就是在描述所谓的“条件”——字符串的特</summary>
+  </entry>
+  <entry>
+    <title>四则运算简单实现</title>
+    <link href="https://carptopus.github.io/2015/09/07/%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/"/>
+    <id>https://carptopus.github.io/2015/09/07/%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</id>
+    <updated>2015-09-07T16:06:14+08:00</updated>
+    <summary type="text">一时兴起想到要写段有美感的代码（不过感觉没有实现这个目标嘛╮(╯_╰)╭），然后就想到要实现一下四则运算。于是过了大概一个星期，写了三个版本。第一版完全是我自己想到的思路，主要就是函数递归，遇到后面优先级高的情况就把后面的部分递归计算，否则就顺序计算下去。第二版是按照当年数据结构</summary>
+  </entry>
+  <entry>
+    <title>LifeGame人生游戏</title>
+    <link href="https://carptopus.github.io/2015/08/05/LifeGame%E4%BA%BA%E7%94%9F%E6%B8%B8%E6%88%8F/"/>
+    <id>https://carptopus.github.io/2015/08/05/LifeGame%E4%BA%BA%E7%94%9F%E6%B8%B8%E6%88%8F/</id>
+    <updated>2015-08-05T22:04:09+08:00</updated>
+    <summary type="text">LifeGame，算是我做的第一个有用的Android软件(-.-)下载地址
+人生游戏，让人生量化（时间段）可见（积分统计）付出的，收获的，你的一生，都可以用时间来衡量，用分数来显示。
+灵感来源：《太上感应篇》赵康靖公择豆修心宋朝的赵康靖公，曾经在桌子上放置了两个瓶子，利用黑豆和</summary>
+  </entry>
+  <entry>
+    <title>谁的灵魂</title>
+    <link href="https://carptopus.github.io/2015/08/03/%E8%B0%81%E7%9A%84%E7%81%B5%E9%AD%82/"/>
+    <id>https://carptopus.github.io/2015/08/03/%E8%B0%81%E7%9A%84%E7%81%B5%E9%AD%82/</id>
+    <updated>2015-08-03T19:53:31+08:00</updated>
+    <summary type="text">小时候看过一部叫《第六日》的科幻电影，印象极深。因为这部电影让我萌生关于灵魂和意识的思考（瞎想）
+相比于其他关于克隆人的电影《第六日》最特别的地方就是其中的科技在克隆人的肉体的同时可以复制他的记忆。其实克隆技术本身对人伦的影响并没有想象中那么大，但当有个人不但和你长的一模一样而且</summary>
+  </entry>
+  <entry>
+    <title>用Total Uninstall 卸载“绿色软件”</title>
+    <link href="https://carptopus.github.io/2015/07/24/%E7%94%A8Total%20Uninstall%20%E5%8D%B8%E8%BD%BD%E2%80%9C%E7%BB%BF%E8%89%B2%E8%BD%AF%E4%BB%B6%E2%80%9D/"/>
+    <id>https://carptopus.github.io/2015/07/24/%E7%94%A8Total%20Uninstall%20%E5%8D%B8%E8%BD%BD%E2%80%9C%E7%BB%BF%E8%89%B2%E8%BD%AF%E4%BB%B6%E2%80%9D/</id>
+    <updated>2015-07-24T01:32:17+08:00</updated>
+    <summary type="text">今天又看到了说绿色软件删除文件夹就无残留卸载的言论了。
+关于普通的所谓绿色软件和便携软件的可以看看这篇文章不多赘言，如何卸载绿色软件最好呢？有人说直接删了文件夹然后用cc清理一下注册表不就干净了，其实呢，不一定！因为还有一些软件会在ProgramData文件夹或者C:\Users</summary>
+  </entry>
+  <entry>
+    <title>关于喝不到的鸡汤和自己来煮鸡汤</title>
+    <link href="https://carptopus.github.io/2015/06/27/%E5%85%B3%E4%BA%8E%E5%96%9D%E4%B8%8D%E5%88%B0%E7%9A%84%E9%B8%A1%E6%B1%A4%E5%92%8C%E8%87%AA%E5%B7%B1%E6%9D%A5%E7%85%AE%E9%B8%A1%E6%B1%A4/"/>
+    <id>https://carptopus.github.io/2015/06/27/%E5%85%B3%E4%BA%8E%E5%96%9D%E4%B8%8D%E5%88%B0%E7%9A%84%E9%B8%A1%E6%B1%A4%E5%92%8C%E8%87%AA%E5%B7%B1%E6%9D%A5%E7%85%AE%E9%B8%A1%E6%B1%A4/</id>
+    <updated>2015-06-27T19:42:34+08:00</updated>
+    <summary type="text">先说明一下，我所指的鸡汤是比较高级那种，不是些励志或者暖心的屁话那种，至少是些对于怎样生活有启发意义的故事和教导。写这篇的起因是14年3月16日我的一条状态“今天年级会上有个关于亚瑟王的一个小故事，顿悟到一个道理。我想，要开窍了。”那天发生了什么？
+那天年级会辅导员引用了一个故事</summary>
+  </entry>
+  <entry>
+    <title>MyHotKey我的热键</title>
+    <link href="https://carptopus.github.io/2015/06/23/MyHotKey%E6%88%91%E7%9A%84%E7%83%AD%E9%94%AE/"/>
+    <id>https://carptopus.github.io/2015/06/23/MyHotKey%E6%88%91%E7%9A%84%E7%83%AD%E9%94%AE/</id>
+    <updated>2015-06-23T09:42:07+08:00</updated>
+    <summary type="text">首先先来最想说的话：
+
+我写软件的最初衷就是给自己写软件。然后，如果自己觉得好用的话，也可以分享给别人。
+
+软件介绍MyHotKey这个小软件的功能有两个：
+
+Win键+Q键强制退出当前应用，这个不多介绍了，遇到软件卡死可以试试。
+最关键的，Win键+S键调用默认浏览器搜索当前选</summary>
+  </entry>
+</feed>

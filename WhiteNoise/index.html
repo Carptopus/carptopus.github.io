@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的白噪音</title>
+    <link rel="shortcut icon" href="icon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+        
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            gap: 10px;
+        }
+        
+        .timer-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2F80ED;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .timer-select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #2F80ED;
+            background-color: white;
+            color: #2F80ED;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        button {
+            background-color: #2F80ED;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #56CCF2;
+        }
+        
+        button:disabled {
+            background-color: #a0aec0;
+            cursor: not-allowed;
+        }
+        
+        main {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .audio-list {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .audio-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background-color: #f7fafc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .audio-item:hover {
+            background-color: #edf2f7;
+            transform: translateY(-2px);
+        }
+        
+        .audio-item.active {
+            background-color: #e6f7ff;
+            border-left: 4px solid #2F80ED;
+        }
+        
+        .audio-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #2F80ED;
+            color: white;
+            border-radius: 50%;
+        }
+        
+        .audio-info {
+            flex: 1;
+        }
+        
+        .audio-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .audio-duration {
+            font-size: 14px;
+            color: #718096;
+        }
+        
+        .play-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #48bb78;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .play-button.playing {
+            background-color: #f56565;
+        }
+        
+        .volume-control {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .volume-slider {
+            width: 200px;
+        }
+        
+        footer {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            text-align: center;
+            color: #4a5568;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>我的白噪音</h1>
+        <div class="timer-container">
+            <select id="timerSelect" class="timer-select">
+                <option value="10">10分钟</option>
+                <option value="15">15分钟</option>
+                <option value="25" selected>25分钟</option>
+            </select>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="timer-controls">
+                <button id="startTimer">开始计时</button>
+                <button id="pauseTimer" disabled>暂停</button>
+                <button id="resetTimer">重置</button>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="audio-list">
+            <h2>选择白噪音</h2>
+            <div class="audio-item" data-audio="乡间虫鸣">
+                <div class="audio-icon">🌙</div>
+                <div class="audio-info">
+                    <div class="audio-title">乡间虫鸣</div>
+                    <div class="audio-duration">放松身心，助眠入梦</div>
+                </div>
+                <button class="play-button">▶</button>
+            </div>
+            <div class="audio-item" data-audio="雨声">
+                <div class="audio-icon">🌧️</div>
+                <div class="audio-info">
+                    <div class="audio-title">雨声</div>
+                    <div class="audio-duration">舒缓压力，平静心情</div>
+                </div>
+                <button class="play-button">▶</button>
+            </div>
+        </div>
+        
+        <div class="volume-control">
+            <label for="volumeSlider">音量:</label>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="15">
+            <span id="volumeValue">15%</span>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2025 我的白噪音 </p>
+    </footer>
+    
+    <script>
+        // 音频文件路径
+        const audioFiles = {
+            '乡间虫鸣': 'asset/Summer Night in the Village.mp3',
+            '雨声': 'asset/Rainy Mood.mp3'
+        };
+        
+        // 当前播放的音频
+        let currentAudio = null;
+        let currentAudioName = null;
+        
+        // 计时器相关变量
+        let timerInterval = null;
+        let timerSeconds = 25 * 60; // 默认25分钟
+        let isTimerPaused = false;
+        
+        // DOM元素
+        const audioItems = document.querySelectorAll('.audio-item');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerSelect = document.getElementById('timerSelect');
+        const startTimerBtn = document.getElementById('startTimer');
+        const pauseTimerBtn = document.getElementById('pauseTimer');
+        const resetTimerBtn = document.getElementById('resetTimer');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTimerDisplay();
+            
+            // 预加载第一个音频文件
+            preloadFirstAudio();
+            
+            // 音频项点击事件
+            audioItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const audioName = this.getAttribute('data-audio');
+                    toggleAudio(audioName);
+                });
+            });
+            
+            // 计时器控制按钮事件
+            startTimerBtn.addEventListener('click', startTimer);
+            pauseTimerBtn.addEventListener('click', pauseTimer);
+            resetTimerBtn.addEventListener('click', resetTimer);
+            
+            // 计时器选择下拉列表事件
+            timerSelect.addEventListener('change', function() {
+                if (!timerInterval) { // 只有在计时器未运行时才能更改
+                    timerSeconds = parseInt(this.value) * 60;
+                    updateTimerDisplay();
+                }
+            });
+            
+            // 音量控制
+            volumeSlider.addEventListener('input', function() {
+                const volume = this.value;
+                volumeValue.textContent = volume + '%';
+                if (currentAudio) {
+                    currentAudio.volume = volume / 100;
+                }
+            });
+        });
+        
+        // 预加载第一个音频文件
+        function preloadFirstAudio() {
+            const firstAudioName = '乡间虫鸣';
+            const audioPath = audioFiles[firstAudioName];
+            
+            if (audioPath && !audioCache[firstAudioName]) {
+                const audio = new Audio(audioPath);
+                audio.loop = true;
+                // 设置预加载
+                audio.preload = 'auto';
+                
+                // 添加到缓存
+                audioCache[firstAudioName] = audio;
+                
+                // 开始预加载但不播放
+                audio.load();
+                console.log('预加载音频:', firstAudioName);
+            }
+        }
+        
+        // 切换音频播放
+        function toggleAudio(audioName) {
+            // 如果点击的是当前正在播放的音频，则暂停
+            if (currentAudioName === audioName && !currentAudio.paused) {
+                pauseCurrentAudio();
+                return;
+            }
+            
+            // 如果有其他音频正在播放，先停止
+            if (currentAudio) {
+                stopCurrentAudio();
+            }
+            
+            // 播放新音频
+            playAudio(audioName);
+            
+            // 预加载其他未缓存的音频（后台预加载）
+            preloadOtherAudios(audioName);
+        }
+        
+        // 预加载其他音频（后台预加载）
+        function preloadOtherAudios(currentAudioName) {
+            for (const audioName in audioFiles) {
+                if (audioName !== currentAudioName && !audioCache[audioName]) {
+                    const audioPath = audioFiles[audioName];
+                    const audio = new Audio(audioPath);
+                    audio.loop = true;
+                    audio.preload = 'auto';
+                    
+                    // 添加到缓存
+                    audioCache[audioName] = audio;
+                    
+                    // 开始预加载但不播放
+                    audio.load();
+                    console.log('后台预加载音频:', audioName);
+                    
+                    // 只预加载一个，避免一次性加载太多
+                    break;
+                }
+            }
+        }
+        
+        // 音频缓存对象
+        const audioCache = {};
+        
+        // 播放音频
+        function playAudio(audioName) {
+            const audioPath = audioFiles[audioName];
+            if (!audioPath) return;
+            
+            // 检查缓存中是否已有该音频
+            if (audioCache[audioName]) {
+                currentAudio = audioCache[audioName];
+                // 确保音量设置正确
+                currentAudio.volume = volumeSlider.value / 100;
+                // 如果音频已结束，重新开始播放
+                if (currentAudio.ended) {
+                    currentAudio.currentTime = 0;
+                }
+                currentAudio.play().then(() => {
+                    currentAudioName = audioName;
+                    updateAudioUI();
+                }).catch(error => {
+                    console.error('音频播放失败:', error);
+                });
+            } else {
+                // 创建新的音频对象并缓存
+                currentAudio = new Audio(audioPath);
+                currentAudio.loop = true;
+                currentAudio.volume = volumeSlider.value / 100;
+                
+                // 添加到缓存
+                audioCache[audioName] = currentAudio;
+                
+                currentAudio.play().then(() => {
+                    currentAudioName = audioName;
+                    updateAudioUI();
+                }).catch(error => {
+                    console.error('音频播放失败:', error);
+                    // 从缓存中移除失败的音频
+                    delete audioCache[audioName];
+                    // alert('音频播放失败，请检查文件是否存在');
+                });
+            }
+        }
+        
+        // 暂停当前音频
+        function pauseCurrentAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                updateAudioUI();
+            }
+        }
+        
+        // 停止当前音频
+        function stopCurrentAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                // 重置播放位置到开始
+                currentAudio.currentTime = 0;
+                // 不再销毁音频对象，而是保留在缓存中
+                currentAudio = null;
+                currentAudioName = null;
+                updateAudioUI();
+            }
+        }
+        
+        // 更新音频UI
+        function updateAudioUI() {
+            audioItems.forEach(item => {
+                const audioName = item.getAttribute('data-audio');
+                const playButton = item.querySelector('.play-button');
+                
+                if (audioName === currentAudioName) {
+                    item.classList.add('active');
+                    if (currentAudio && !currentAudio.paused) {
+                        playButton.textContent = '⏸';
+                        playButton.classList.add('playing');
+                    } else {
+                        playButton.textContent = '▶';
+                        playButton.classList.remove('playing');
+                    }
+                } else {
+                    item.classList.remove('active');
+                    playButton.textContent = '▶';
+                    playButton.classList.remove('playing');
+                }
+            });
+        }
+        
+        // 开始计时器
+        function startTimer() {
+            if (timerInterval) return;
+            
+            startTimerBtn.disabled = true;
+            pauseTimerBtn.disabled = false;
+            timerSelect.disabled = true; // 计时器运行时禁用下拉列表
+            isTimerPaused = false;
+            
+            // 如果没有正在播放的音频，则播放第一个音频
+            if (!currentAudio) {
+                const firstAudioName = '乡间虫鸣'; // 第一个音频的名称
+                playAudio(firstAudioName);
+            } else if (currentAudio.paused) {
+                // 如果有音频但处于暂停状态，则继续播放
+                currentAudio.play().then(() => {
+                    updateAudioUI();
+                }).catch(error => {
+                    console.error('音频继续播放失败:', error);
+                });
+            }
+            
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    // 计时结束，停止音频
+                    stopCurrentAudio();
+                    resetTimer();
+                    alert('计时结束，音频已停止');
+                }
+            }, 1000);
+        }
+        
+        // 暂停计时器
+        function pauseTimer() {
+            if (!timerInterval) return;
+            
+            clearInterval(timerInterval);
+            timerInterval = null;
+            startTimerBtn.disabled = false;
+            pauseTimerBtn.disabled = true;
+            timerSelect.disabled = false; // 暂停时启用下拉列表
+            isTimerPaused = true;
+            
+            // 暂停当前播放的音频
+            if (currentAudio && !currentAudio.paused) {
+                pauseCurrentAudio();
+            }
+        }
+        
+        // 重置计时器
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerSeconds = parseInt(timerSelect.value) * 60; // 从下拉列表获取值
+            updateTimerDisplay();
+            startTimerBtn.disabled = false;
+            pauseTimerBtn.disabled = true;
+            timerSelect.disabled = false; // 重置时启用下拉列表
+            isTimerPaused = false;
+            
+            // 停止当前播放的音频
+            stopCurrentAudio();
+        }
+        
+        // 更新计时器显示
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>
