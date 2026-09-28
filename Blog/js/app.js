@@ -36,6 +36,7 @@
     categories: new Map(),
     tags: new Map(),
   };
+  const textRequests = new Map();
 
   const main = document.getElementById('main');
   const aside = document.getElementById('site-aside');
@@ -81,6 +82,24 @@
     }
     if (pathname === '/index.html') return '/';
     return pathname.endsWith('/') ? pathname : `${pathname}/`;
+  }
+
+  function fetchText(source, label) {
+    const url = new URL(encodeURI(blogAssetPath(source)), location.origin).href;
+    if (textRequests.has(url)) return textRequests.get(url);
+
+    let request;
+    request = fetch(url)
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`${label}失败（HTTP ${response.status}）。`);
+        return response.text();
+      })
+      .catch((error) => {
+        if (textRequests.get(url) === request) textRequests.delete(url);
+        throw error;
+      });
+    textRequests.set(url, request);
+    return request;
   }
 
   function displayDate(post, withPrefix = false) {
@@ -805,10 +824,7 @@
     }
 
     renderMessage('正在载入文章', post.title);
-    const response = await fetch(encodeURI(blogAssetPath(post.source)));
-    if (!response.ok) throw new Error(`读取 Markdown 失败（HTTP ${response.status}）。`);
-
-    const markdown = renderFencedCodeBlocks(normalizeMarkdownImages(splitFrontMatter(await response.text())));
+    const markdown = renderFencedCodeBlocks(normalizeMarkdownImages(splitFrontMatter(await fetchText(post.source, '读取 Markdown'))));
     const unsafeHtml = window.marked.parse(markdown, { gfm: true, breaks: true });
     const safeHtml = window.DOMPurify.sanitize(unsafeHtml, {
       USE_PROFILES: { html: true },
@@ -864,9 +880,7 @@
     renderMessage('正在载入页面', '关于');
     useStandaloneLayout();
     main.className = 'page';
-    const response = await fetch(blogAssetPath('pages/about.md'));
-    if (!response.ok) throw new Error(`读取关于页面失败（HTTP ${response.status}）。`);
-    const documentData = parseFrontMatter(await response.text());
+    const documentData = parseFrontMatter(await fetchText('pages/about.md', '读取关于页面'));
     const aboutMarkdown = documentData.body.replace(/\.\.\.(?=\s|$)/g, '…');
     const safeHtml = window.DOMPurify.sanitize(window.marked.parse(aboutMarkdown, { gfm: true, breaks: true }));
     const title = documentData.attributes.title || '关于';
@@ -1071,8 +1085,8 @@
     try {
       if (!window.marked || !window.DOMPurify) throw new Error('Markdown 渲染库加载失败，请检查网络后刷新页面。');
       const [response, configResponse] = await Promise.all([
-        fetch(`${BLOG_ROOT}/data/posts.json`, { cache: 'no-cache' }),
-        fetch(`${BLOG_ROOT}/data/site-config.json`, { cache: 'no-cache' }),
+        fetch(`${BLOG_ROOT}/data/posts.json`),
+        fetch(`${BLOG_ROOT}/data/site-config.json`),
       ]);
       if (!response.ok) throw new Error(`读取文章索引失败（HTTP ${response.status}）。`);
       if (!configResponse.ok) throw new Error(`读取站点配置失败（HTTP ${configResponse.status}）。`);
